@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -49,7 +50,7 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Button className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl">
+            <Button to="/signup" className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl">
               Start Free Trial
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
@@ -181,7 +182,7 @@ const CTA = () => {
               Join 10,000+ businesses globally and transform your B2B workflow today. 
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button className="w-full sm:w-auto bg-white text-indigo-600 hover:bg-indigo-50 px-12 py-6 text-xl shadow-2xl shadow-indigo-800/20">
+              <Button to="/signup" className="w-full sm:w-auto bg-white text-indigo-600 hover:bg-indigo-50 px-12 py-6 text-xl shadow-2xl shadow-indigo-800/20">
                 Get Started Now
               </Button>
               <div className="flex items-center gap-2 text-white/80 font-bold tracking-wide">

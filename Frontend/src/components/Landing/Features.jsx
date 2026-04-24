@@ -1,32 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Zap, Globe, MessageSquare } from 'lucide-react';
+import { Tag, Truck, MapPin } from 'lucide-react';
 
 const Features = () => {
   const features = [
     {
-      icon: ShieldCheck,
-      title: "Secure Escrow",
-      desc: "Industry-leading payment protection with multi-signature verification.",
+      icon: Tag,
+      title: "Make an Offer",
+      desc: "Love a product but want a better price? Negotiate directly with sellers to grab the best deal instantly.",
       color: "bg-emerald-100 text-emerald-600"
     },
     {
-      icon: Zap,
-      title: "Smart Contracts",
-      desc: "Automated negotiation and dispute resolution using AI-driven logic.",
-      color: "bg-amber-100 text-amber-600"
-    },
-    {
-      icon: Globe,
-      title: "Global Logistics",
-      desc: "Real-time tracking and customs automation for over 120 countries.",
+      icon: Truck,
+      title: "Fast & Easy Delivery",
+      desc: "Get your favorite items delivered safely and straight to your doorstep with our trusted shipping partners.",
       color: "bg-indigo-100 text-indigo-600"
     },
     {
-      icon: MessageSquare,
-      title: "Unified Chat",
-      desc: "Context-aware communication platform with instant translation.",
-      color: "bg-rose-100 text-rose-600"
+      icon: MapPin,
+      title: "Live Order Tracking",
+      desc: "Know exactly where your package is. Track your order in real-time from the warehouse to your home.",
+      color: "bg-amber-100 text-amber-600"
     }
   ];
 
@@ -34,13 +28,13 @@ const Features = () => {
     <section id="features" className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-24">
-          <h2 className="text-5xl font-black text-gray-900 mb-6 tracking-tight">Everything You Need</h2>
+          <h2 className="text-5xl font-black text-gray-900 mb-6 tracking-tight">Shop Smart & Easy</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
-            Powerful tools to help you manage global trade with confidence and clarity.
+            Everything you need to find great products, negotiate prices, and get them delivered fast.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((f, idx) => (
             <motion.div
               key={idx}

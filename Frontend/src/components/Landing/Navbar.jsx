@@ -28,7 +28,7 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {['Features', 'How it Works', 'Pricing', 'Testimonials'].map((item) => (
+          {['Features', 'How it Works', 'Categories'].map((item) => (
             <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm font-bold text-gray-600 hover:text-indigo-600 transition-colors uppercase tracking-widest">
               {item}
             </a>
@@ -56,7 +56,7 @@ const Navbar = () => {
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-4 py-8 flex flex-col gap-6">
-              {['Features', 'How it Works', 'Pricing'].map((item) => (
+              {['Features', 'How it Works', 'Categories'].map((item) => (
                 <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-lg font-bold text-gray-900" onClick={() => setIsMobileMenuOpen(false)}>
                   {item}
                 </a>

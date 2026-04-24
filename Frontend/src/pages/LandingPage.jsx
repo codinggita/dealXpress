@@ -35,18 +35,18 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8">
             <Sparkles className="w-4 h-4 text-indigo-600" />
             <span className="text-sm font-bold text-indigo-600 uppercase tracking-widest">
-              B2B TRADE REVOLUTION
+              SHOPPING REVOLUTION
             </span>
           </div>
           
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight leading-[1.05]">
-            Trade Smart.<br />
-            <span className="text-gradient">Grow Faster.</span>
+            Shop Smart.<br />
+            <span className="text-gradient">Save More.</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
-            The world's most intuitive platform for secure B2B negotiation, 
-            instant payments, and global logistics. 
+            Discover amazing products, negotiate directly for the best price, 
+            and get fast delivery straight to your door.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
@@ -77,11 +77,22 @@ const Hero = () => {
                    <div className="w-3 h-3 rounded-full bg-emerald-400" />
                  </div>
                </div>
-               <div className="pt-20 px-8 grid grid-cols-3 gap-6">
+               <div className="pt-20 px-8 grid grid-cols-3 gap-6 relative z-10">
+                 {/* Mock Product Cards */}
                  {[1, 2, 3].map(i => (
-                   <div key={i} className="h-32 rounded-2xl bg-gray-50 border border-gray-100 animate-pulse" />
+                   <div key={i} className="h-36 rounded-2xl bg-white border border-gray-200 shadow-sm p-3 flex flex-col">
+                     <div className="w-full h-16 bg-indigo-50/50 rounded-xl mb-3" />
+                     <div className="w-2/3 h-3 bg-gray-200 rounded-full mb-2" />
+                     <div className="w-1/3 h-3 bg-gray-100 rounded-full mt-auto" />
+                   </div>
                  ))}
-                 <div className="col-span-3 h-64 rounded-2xl bg-gray-50 border border-gray-100 animate-pulse" />
+                 {/* Mock Bottom Section (Table or large card) */}
+                 <div className="col-span-3 h-48 rounded-2xl bg-white border border-gray-200 shadow-sm p-5 flex flex-col">
+                    <div className="w-48 h-4 bg-gray-200 rounded-full mb-4" />
+                    <div className="flex-1 w-full bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center">
+                       <div className="w-1/2 h-2 bg-gray-200 rounded-full" />
+                    </div>
+                 </div>
                </div>
             </div>
           </div>
@@ -97,8 +108,8 @@ const Hero = () => {
                 <CheckCircle2 className="text-emerald-600 w-7 h-7" />
               </div>
               <div>
-                <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Global Security</div>
-                <div className="text-xl font-black text-gray-900">Verified Trade</div>
+                <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Secure Payments</div>
+                <div className="text-xl font-black text-gray-900">Verified Sellers</div>
               </div>
             </div>
             <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
@@ -118,9 +129,9 @@ const Hero = () => {
 
 const Steps = () => {
   const steps = [
-    { icon: Users, title: "Connect", desc: "Browse through verified suppliers and buyers worldwide." },
-    { icon: MousePointer2, title: "Negotiate", desc: "Collaborate on terms with our real-time smart negotiation engine." },
-    { icon: CreditCard, title: "Transact", desc: "Securely pay and track your shipment until it reaches your door." }
+    { icon: Users, title: "Browse", desc: "Explore thousands of products from trusted sellers." },
+    { icon: MousePointer2, title: "Make Offer", desc: "Spot something you like? Make an offer and get a better deal instantly." },
+    { icon: CreditCard, title: "Delivery", desc: "Pay securely and track your order right to your doorstep." }
   ];
 
   return (
@@ -129,7 +140,7 @@ const Steps = () => {
         <div className="text-center mb-24">
           <h2 className="text-5xl font-black text-gray-900 mb-6 tracking-tight">Three Steps to Success</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
-            Complexity simplified. We've optimized the B2B trade cycle for the digital age.
+            Shopping made simple. We've made it easier than ever to get exactly what you want at the price you want.
           </p>
         </div>
 
@@ -176,18 +187,18 @@ const CTA = () => {
 
           <div className="relative z-10">
             <h2 className="text-5xl md:text-7xl font-black text-white mb-10 tracking-tight">
-              Ready to Upgrade <br className="hidden md:block" /> Your Trade?
+              Ready to Grab <br className="hidden md:block" /> the Best Deal?
             </h2>
             <p className="text-indigo-100 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-medium">
-              Join 10,000+ businesses globally and transform your B2B workflow today. 
+              Join thousands of smart shoppers and start saving today. 
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button to="/signup" className="w-full sm:w-auto bg-white text-indigo-600 hover:bg-indigo-50 px-12 py-6 text-xl shadow-2xl shadow-indigo-800/20">
-                Get Started Now
+              <Button to="/signup" className="w-full sm:w-auto !bg-white !text-indigo-600 hover:!bg-indigo-50 px-12 py-6 text-xl shadow-2xl shadow-indigo-800/20">
+                Explore Deals
               </Button>
               <div className="flex items-center gap-2 text-white/80 font-bold tracking-wide">
                 <ShieldCheck className="w-6 h-6" />
-                SECURE & COMPLIANT
+                100% SECURE CHECKOUT
               </div>
             </div>
           </div>

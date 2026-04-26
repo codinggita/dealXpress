@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import { 
   Package, 
   Truck, 
@@ -11,51 +12,6 @@ import {
   MapPin,
   ExternalLink
 } from 'lucide-react';
-
-const MOCK_SHIPMENTS = [
-  {
-    id: 'DX-ORD-7721',
-    product: {
-      name: 'MacBook Pro 16" M3 Max',
-      image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=200',
-    },
-    status: 'In Transit',
-    statusColor: 'blue',
-    courier: 'FedEx Express',
-    trackingId: '772144558890',
-    location: 'Chicago, IL',
-    estDelivery: 'Tomorrow, Oct 25',
-    progress: 65
-  },
-  {
-    id: 'DX-ORD-6542',
-    product: {
-      name: 'Herman Miller Aeron Chair',
-      image: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&q=80&w=200',
-    },
-    status: 'Processing',
-    statusColor: 'amber',
-    courier: 'UPS Ground',
-    trackingId: 'Pending',
-    location: 'Warehouse - TX',
-    estDelivery: 'Oct 28, 2026',
-    progress: 15
-  },
-  {
-    id: 'DX-ORD-4412',
-    product: {
-      name: 'Sony A7IV Mirrorless Camera',
-      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=200',
-    },
-    status: 'Delivered',
-    statusColor: 'emerald',
-    courier: 'DHL Express',
-    trackingId: 'DHL-99228833',
-    location: 'Mumbai, MH',
-    estDelivery: 'Oct 22, 2026',
-    progress: 100
-  }
-];
 
 const StatusBadge = ({ status, color }) => {
   const colors = {
@@ -73,6 +29,15 @@ const StatusBadge = ({ status, color }) => {
 };
 
 const Delivery = () => {
+  const shipments = useSelector((state) => state.orders.items);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredShipments = shipments.filter(shipment => 
+    shipment.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    shipment.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    shipment.trackingId.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="space-y-8 pb-12">
       {/* Page Header */}
@@ -90,6 +55,8 @@ const Delivery = () => {
             <input 
               type="text" 
               placeholder="Track Order ID..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 w-full md:w-64 transition-all shadow-sm"
             />
           </div>
@@ -128,7 +95,7 @@ const Delivery = () => {
       <div className="space-y-4">
         <h2 className="text-lg font-bold text-gray-900 px-1">Active Shipments</h2>
         
-        {MOCK_SHIPMENTS.map((shipment, index) => (
+        {filteredShipments.map((shipment, index) => (
           <motion.div
             key={shipment.id}
             initial={{ opacity: 0, x: -20 }}

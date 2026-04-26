@@ -4,6 +4,10 @@ import LandingPage from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Marketplace from './pages/Marketplace';
+import Negotiations from './pages/Negotiations';
+import NegotiationRoom from './pages/NegotiationRoom';
+import Delivery from './pages/Delivery';
+import Analytics from './pages/Analytics';
 import DashboardLayout from './components/layouts/DashboardLayout';
 
 function App() {
@@ -19,6 +23,10 @@ function App() {
         {/* Dashboard Routes */}
         <Route element={<DashboardLayout />}>
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/negotiations" element={<Negotiations />} />
+          <Route path="/negotiation-room" element={<NegotiationRoom />} />
+          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/analytics" element={<Analytics />} />
           {/* Redirect to marketplace by default for dashboard */}
           <Route path="/dashboard" element={<Navigate to="/marketplace" replace />} />
         </Route>

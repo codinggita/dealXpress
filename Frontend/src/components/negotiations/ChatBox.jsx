@@ -10,7 +10,9 @@ const ChatBox = ({
   offerAmount, 
   setOfferAmount, 
   handleSendMessage, 
-  messagesEndRef 
+  messagesEndRef,
+  isAccepted,
+  onCheckoutClick
 }) => {
   return (
     <div className="lg:w-2/3 bg-white rounded-2xl border border-gray-200/75 shadow-sm flex flex-col h-full overflow-hidden">
@@ -67,48 +69,63 @@ const ChatBox = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Chat Input */}
+      {/* Chat Input or Checkout Action */}
       <div className="p-4 bg-white border-t border-gray-100">
-        <form onSubmit={handleSendMessage} className="flex flex-col gap-3">
-          {/* Quick Offer Row */}
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-[200px]">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 sm:text-sm font-bold">$</span>
-              </div>
-              <input
-                type="number"
-                placeholder="Offer amount"
-                value={offerAmount}
-                onChange={(e) => setOfferAmount(e.target.value)}
-                className="pl-7 pr-3 py-2 w-full bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-              />
+        {isAccepted ? (
+          <div className="flex flex-col items-center justify-center py-4 space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center">
+              <h4 className="text-lg font-bold text-gray-900">Offer Accepted!</h4>
+              <p className="text-sm text-gray-500">Proceed to checkout to secure your deal.</p>
             </div>
-            {offerAmount && (
-              <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
-                Ready to offer ${offerAmount}
-              </div>
-            )}
-          </div>
-
-          {/* Message Input Row */}
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Type a message or add a note to your offer..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-            />
-            <button 
-              type="submit"
-              disabled={!inputMessage.trim() && !offerAmount}
-              className="p-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 transition-colors shadow-md shadow-indigo-600/20 flex-shrink-0"
+            <button
+              onClick={onCheckoutClick}
+              className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
             >
-              <Send className="w-5 h-5" />
+              Proceed to Checkout
             </button>
           </div>
-        </form>
+        ) : (
+          <form onSubmit={handleSendMessage} className="flex flex-col gap-3">
+            {/* Quick Offer Row */}
+            <div className="flex items-center gap-3">
+              <div className="relative flex-1 max-w-[200px]">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span className="text-gray-500 sm:text-sm font-bold">$</span>
+                </div>
+                <input
+                  type="number"
+                  placeholder="Offer amount"
+                  value={offerAmount}
+                  onChange={(e) => setOfferAmount(e.target.value)}
+                  className="pl-7 pr-3 py-2 w-full bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                />
+              </div>
+              {offerAmount && (
+                <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
+                  Ready to offer ${offerAmount}
+                </div>
+              )}
+            </div>
+
+            {/* Message Input Row */}
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Type a message or add a note to your offer..."
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              />
+              <button 
+                type="submit"
+                disabled={!inputMessage.trim() && !offerAmount}
+                className="p-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 transition-colors shadow-md shadow-indigo-600/20 flex-shrink-0"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

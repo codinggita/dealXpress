@@ -14,7 +14,7 @@ const Sidebar = () => {
   const navItems = [
     { icon: LayoutDashboard, label: 'Marketplace', path: '/marketplace' },
     { icon: Handshake, label: 'Negotiations', path: '/negotiations' },
-    { icon: Truck, label: 'Delivery', path: '/delivery' },
+    { icon: Truck, label: 'Delivery Tracking', path: '/delivery' },
     { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   ];
 

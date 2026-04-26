@@ -52,7 +52,16 @@ const NegotiationRoom = () => {
         const userText = lastMessage.text.toLowerCase();
         
         if (lastMessage.isOffer) {
-          botResponse = `I see your offer of $${lastMessage.offerValue}. That's a bit low for me. Can you do a little better?`;
+          const offer = parseFloat(lastMessage.offerValue);
+          const originalPrice = parseFloat(deal?.price || deal?.originalPrice || 0);
+          
+          if (offer >= originalPrice) {
+            botResponse = `I see your offer of $${lastMessage.offerValue}. That's a great offer! I accept it.`;
+          } else if (offer >= originalPrice * 0.9) {
+            botResponse = `I see your offer of $${lastMessage.offerValue}. We are very close. Can you just increase it a little bit more?`;
+          } else {
+            botResponse = `I see your offer of $${lastMessage.offerValue}. That's a bit low for me. Can you do a little better?`;
+          }
         } else if (userText.includes('deal') || userText.includes('agree')) {
           botResponse = "Alright, you've got a deal! I'll accept the offer.";
         } else if (userText.includes('final')) {
@@ -72,7 +81,7 @@ const NegotiationRoom = () => {
 
       return () => clearTimeout(botReplyDelay);
     }
-  }, [messages]);
+  }, [messages, deal]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();

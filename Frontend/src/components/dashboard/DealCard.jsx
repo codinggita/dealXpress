@@ -1,12 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '../common/Button';
 
 const DealCard = ({ deal }) => {
+  const navigate = useNavigate();
   const { title, category, price, image, badge, type = 'price' } = deal;
+
+  const handleMakeOffer = (e) => {
+    e.stopPropagation();
+    navigate('/negotiation-room', { state: { deal } });
+  };
 
   return (
     <motion.div 
+      onClick={handleMakeOffer}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -45,7 +53,10 @@ const DealCard = ({ deal }) => {
             </div>
           </div>
 
-          <button className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200">
+          <button 
+            onClick={handleMakeOffer}
+            className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200"
+          >
             Make Offer
           </button>
         </div>

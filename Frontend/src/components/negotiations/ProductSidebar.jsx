@@ -1,13 +1,13 @@
 import React from 'react';
 import { ArrowLeft, UserCircle2, ShieldCheck, Info } from 'lucide-react';
 
-const ProductSidebar = ({ deal, onBack }) => {
+const ProductSidebar = ({ deal, negotiation, currentOffer, onBack, onRespond }) => {
   if (!deal) return null;
 
   const productTitle = deal.title || deal.product?.name;
   const productImage = deal.image || deal.product?.image;
   const productPrice = deal.price || `$${deal.originalPrice?.toLocaleString()}`;
-  const sellerName = deal.seller || 'Verified Seller';
+  const sellerName = deal.seller?.name || deal.seller || 'Verified Seller';
 
   return (
     <div className="lg:w-1/3 flex flex-col gap-6">
@@ -33,6 +33,33 @@ const ProductSidebar = ({ deal, onBack }) => {
           <span className="text-sm font-medium text-gray-500">Listing Price:</span>
           <span className="text-xl font-black text-indigo-600">{productPrice}</span>
         </div>
+
+        {currentOffer && (
+          <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 mb-6 animate-in zoom-in duration-300">
+            <div className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-1">Active Offer</div>
+            <div className="text-2xl font-black text-amber-700">${currentOffer.amount}</div>
+            <div className="text-[10px] text-amber-500 mt-1 font-medium italic">
+              Expires: {new Date(currentOffer.expiresAt).toLocaleTimeString()}
+            </div>
+            
+            {/* Logic to show Respond buttons if user is not the one who made the offer */}
+            {/* For now, assuming if it's 'pending' and we are seeing it, we can respond */}
+            <div className="flex gap-2 mt-4">
+              <button 
+                onClick={() => onRespond(currentOffer._id, 'accepted')}
+                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-lg transition-colors shadow-sm"
+              >
+                Accept
+              </button>
+              <button 
+                onClick={() => onRespond(currentOffer._id, 'rejected')}
+                className="flex-1 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-bold py-2 rounded-lg transition-colors"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="border-t border-gray-100 pt-4 mt-auto">
           <div className="flex items-center gap-3">

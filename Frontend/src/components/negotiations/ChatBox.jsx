@@ -10,10 +10,16 @@ const ChatBox = ({
   offerAmount, 
   setOfferAmount, 
   handleSendMessage, 
+  handleTyping,
   messagesEndRef,
   isAccepted,
-  onCheckoutClick
+  onCheckoutClick,
+  currentUserId
 }) => {
+  const onInputChange = (e) => {
+    setInputMessage(e.target.value);
+    if (handleTyping) handleTyping();
+  };
   return (
     <div className="lg:w-2/3 bg-white rounded-2xl border border-gray-200/75 shadow-sm flex flex-col h-full overflow-hidden">
       {/* Chat Header */}
@@ -34,12 +40,12 @@ const ChatBox = ({
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              key={msg.id}
-              className={`flex flex-col max-w-[80%] ${msg.sender === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'}`}
+              key={msg.id || msg._id || Math.random()}
+              className={`flex flex-col max-w-[80%] ${msg.senderId === currentUserId ? 'ml-auto items-end' : 'mr-auto items-start'}`}
             >
               <div className={`
                 px-4 py-3 rounded-2xl text-[15px] leading-relaxed shadow-sm
-                ${msg.sender === 'user' 
+                ${msg.senderId === currentUserId 
                   ? 'bg-indigo-600 text-white rounded-tr-sm' 
                   : 'bg-white border border-gray-200 text-gray-800 rounded-tl-sm'}
               `}>
@@ -113,7 +119,7 @@ const ChatBox = ({
                 type="text"
                 placeholder="Type a message or add a note to your offer..."
                 value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
+                onChange={onInputChange}
                 className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
               <button 

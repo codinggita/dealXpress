@@ -47,7 +47,7 @@ const Delivery = () => {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        const res = await axios.get('/api/orders/my', config);
+        const res = await axios.get((import.meta.env.VITE_BACKEND_URL || '') + '/api/orders/my', config);
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to fetch orders:", err);

@@ -36,7 +36,7 @@ const Marketplace = () => {
         setLoading(true);
         // Fetch from all sources in parallel
         const [localRes, api1Res, api2Res] = await Promise.allSettled([
-          fetch('/api/products').then(res => res.ok ? res.json() : []),
+          fetch((import.meta.env.VITE_BACKEND_URL || '') + '/api/products').then(res => res.ok ? res.json() : []),
           fetch('https://fakestoreapi.com/products').then(res => res.json()),
           fetch('https://kolzsticks.github.io/Free-Ecommerce-Products-Api/main/products.json').then(res => res.json())
         ]);

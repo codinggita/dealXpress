@@ -11,7 +11,7 @@ const Analytics = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get('/api/orders/my');
+        const res = await axios.get((import.meta.env.VITE_BACKEND_URL || '') + '/api/orders/my');
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to fetch orders:", err);

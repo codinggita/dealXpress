@@ -13,8 +13,9 @@ import {
   Briefcase,
   Loader2
 } from 'lucide-react';
-import { register, reset } from '../features/auth/authSlice';
+import { register, reset, googleLogin as googleLoginThunk } from '../features/auth/authSlice';
 import Button from '../components/common/Button';
+import { GoogleLogin } from '@react-oauth/google';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -167,6 +168,30 @@ const SignUp = () => {
                 </>
               )}
             </Button>
+
+            <div className="relative my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-100"></div>
+              </div>
+              <div className="relative flex justify-center text-xs font-black uppercase tracking-[0.2em]">
+                <span className="bg-white px-4 text-gray-400">Or continue with</span>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  dispatch(googleLoginThunk(credentialResponse.credential));
+                }}
+                onError={() => {
+                  toast.error('Google Sign-up Failed');
+                }}
+                useOneTap
+                theme="outline"
+                shape="pill"
+                size="large"
+              />
+            </div>
 
             <div className="text-center mt-8">
               <p className="text-gray-500 font-medium">

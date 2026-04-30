@@ -76,26 +76,26 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
           />
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border border-gray-100 dark:border-gray-800"
           >
             {/* Header */}
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/50">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Checkout & Delivery</h2>
-                <p className="text-sm text-gray-500 font-medium mt-1">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Checkout & Delivery</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1">
                   Complete your purchase for ${offerAmount || deal?.price || deal?.originalPrice}
                 </p>
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -107,20 +107,20 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                 
                 {/* Personal Info */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
-                    <User className="w-4 h-4 text-indigo-500" /> Personal Information
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <User className="w-4 h-4 text-indigo-500 dark:text-indigo-400" /> Personal Information
                   </h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                       <input
                         type="text"
                         name="fullName"
                         value={formik.values.fullName}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                        className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                         placeholder="John Doe"
                       />
                       {formik.touched.fullName && formik.errors.fullName && (
@@ -129,14 +129,14 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
                       <input
                         type="text"
                         name="phone"
                         value={formik.values.phone}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.phone && formik.errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                        className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.phone && formik.errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                         placeholder="1234567890"
                       />
                       {formik.touched.phone && formik.errors.phone && (
@@ -146,23 +146,23 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                   </div>
                 </div>
 
-                <hr className="border-gray-100" />
+                <hr className="border-gray-100 dark:border-gray-800" />
 
                 {/* Shipping Address */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-indigo-500" /> Shipping Address
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-indigo-500 dark:text-indigo-400" /> Shipping Address
                   </h3>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address</label>
                     <input
                       type="text"
                       name="address"
                       value={formik.values.address}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.address && formik.errors.address ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                      className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.address && formik.errors.address ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                       placeholder="123 Main St, Apt 4B"
                     />
                     {formik.touched.address && formik.errors.address && (
@@ -172,14 +172,14 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="md:col-span-1">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
                       <input
                         type="text"
                         name="city"
                         value={formik.values.city}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.city && formik.errors.city ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                        className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.city && formik.errors.city ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                         placeholder="New York"
                       />
                       {formik.touched.city && formik.errors.city && (
@@ -188,14 +188,14 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                     </div>
                     
                     <div className="md:col-span-1">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
                       <input
                         type="text"
                         name="state"
                         value={formik.values.state}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.state && formik.errors.state ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                        className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.state && formik.errors.state ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                         placeholder="NY"
                       />
                       {formik.touched.state && formik.errors.state && (
@@ -204,14 +204,14 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                     </div>
 
                     <div className="md:col-span-1">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ZIP Code</label>
                       <input
                         type="text"
                         name="zipCode"
                         value={formik.values.zipCode}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`w-full px-4 py-2.5 bg-gray-50 border ${formik.touched.zipCode && formik.errors.zipCode ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm focus:outline-none focus:ring-2 transition-all`}
+                        className={`w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border ${formik.touched.zipCode && formik.errors.zipCode ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 dark:border-gray-700 focus:border-indigo-500 focus:ring-indigo-500/20'} rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 transition-all`}
                         placeholder="10001"
                       />
                       {formik.touched.zipCode && formik.errors.zipCode && (
@@ -222,18 +222,18 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
                 </div>
 
                 {/* Footer / Submit */}
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
+                <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-end gap-3">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-5 py-2.5 text-sm font-bold text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
+                    className="px-5 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={formik.isSubmitting}
-                    className="px-6 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-600/20 flex items-center gap-2 disabled:opacity-70"
+                    className="px-6 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-600/20 flex items-center gap-2 disabled:opacity-70 cursor-pointer"
                   >
                     {formik.isSubmitting ? (
                       <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

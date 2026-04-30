@@ -38,11 +38,17 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Newsletter</h4>
-            <div className="flex gap-2">
-              <input type="text" placeholder="Email" className="bg-white border border-gray-200 px-4 py-2 rounded-xl focus:ring-2 focus:ring-indigo-600 outline-none w-full" />
-              <Button className="px-4 py-2 rounded-xl"><ArrowRight className="w-5 h-5" /></Button>
-            </div>
+            <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Connect</h4>
+            <ul className="flex flex-col gap-4 text-gray-500 font-bold text-sm">
+              <li className="flex items-center gap-2">
+                <span className="text-gray-400">Email:</span>
+                <a href="mailto:jilan2410@gmail.com" className="hover:text-indigo-600 transition-colors">jilan2410@gmail.com</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-gray-400">WhatsApp:</span>
+                <a href="https://wa.me/7984088939" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">+91 7984088939</a>
+              </li>
+            </ul>
           </div>
         </div>
         

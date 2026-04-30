@@ -40,16 +40,16 @@ const Sidebar = ({ isOpen, onClose }) => {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-900 transition-colors duration-300">
       {/* Logo Section */}
       <div className="p-6 pb-4 flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-2xl font-black text-indigo-600 tracking-tighter">DealXpress</span>
+            <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400 tracking-tighter">DealXpress</span>
           </div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Enterprise SaaS</span>
+          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Enterprise SaaS</span>
         </div>
-        <button onClick={onClose} className="lg:hidden p-2 text-gray-400 hover:text-gray-600">
+        <button onClick={onClose} className="lg:hidden p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <X className="w-5 h-5" />
         </button>
       </div>
@@ -72,33 +72,33 @@ const Sidebar = ({ isOpen, onClose }) => {
             className={({ isActive }) => `
               flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200
               ${isActive 
-                ? 'bg-indigo-50/80 text-indigo-700 font-semibold shadow-sm ring-1 ring-indigo-100/50' 
-                : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900'}
+                ? 'bg-indigo-50/80 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 font-semibold shadow-sm ring-1 ring-indigo-100/50 dark:ring-indigo-900/50' 
+                : 'text-gray-500 dark:text-gray-400 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'}
             `}
           >
-            <item.icon className={`w-5 h-5 ${item.path === '/marketplace' ? 'text-indigo-600' : ''} transition-colors`} />
+            <item.icon className={`w-5 h-5 ${item.path === '/marketplace' ? 'text-indigo-600 dark:text-indigo-400' : ''} transition-colors`} />
             {item.label}
           </NavLink>
         ))}
       </nav>
 
       {/* Footer Links */}
-      <div className="p-3 border-t border-gray-100 space-y-1">
+      <div className="p-3 border-t border-gray-100 dark:border-gray-800 space-y-1">
         {footerItems.map((item) => (
           <NavLink
             key={item.label}
             to={item.path}
             onClick={() => onClose()}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-200"
           >
-            <item.icon className="w-5 h-5 text-gray-400" />
+            <item.icon className="w-5 h-5 text-gray-400 dark:text-gray-500" />
             {item.label}
           </NavLink>
         ))}
         
         <button 
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all duration-200"
         >
           <LogOut className="w-5 h-5" />
           Logout
@@ -110,7 +110,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200/75 flex flex-col h-screen sticky top-0 hidden lg:flex">
+      <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200/75 dark:border-gray-800 flex flex-col h-screen sticky top-0 hidden lg:flex transition-colors duration-300">
         <SidebarContent />
       </aside>
 
@@ -123,14 +123,14 @@ const Sidebar = ({ isOpen, onClose }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100] lg:hidden"
+              className="fixed inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
             />
             <motion.aside
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 left-0 w-72 bg-white z-[101] lg:hidden shadow-2xl"
+              className="fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 z-[101] lg:hidden shadow-2xl dark:shadow-none border-r border-gray-100 dark:border-gray-800"
             >
               <SidebarContent />
             </motion.aside>

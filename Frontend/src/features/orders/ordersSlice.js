@@ -14,7 +14,8 @@ export const saveOrder = createAsyncThunk(
   'orders/save',
   async (orderData, thunkAPI) => {
     try {
-      return await orderService.createOrder(orderData);
+      const token = thunkAPI.getState().auth.user.token;
+      return await orderService.createOrder(orderData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -32,7 +33,8 @@ export const fetchOrders = createAsyncThunk(
   'orders/fetchAll',
   async (_, thunkAPI) => {
     try {
-      return await orderService.getMyOrders();
+      const token = thunkAPI.getState().auth.user.token;
+      return await orderService.getMyOrders(token);
     } catch (error) {
       const message =
         (error.response &&

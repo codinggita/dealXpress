@@ -25,11 +25,11 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-32 bg-white">
+    <section id="features" className="py-32 bg-white dark:bg-gray-950 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-24">
-          <h2 className="text-5xl font-black text-gray-900 mb-6 tracking-tight">Shop Smart & Easy</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
+          <h2 className="text-5xl font-black text-gray-900 dark:text-white mb-6 tracking-tight">Shop Smart & Easy</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium">
             Everything you need to find great products, negotiate prices, and get them delivered fast.
           </p>
         </div>
@@ -39,13 +39,13 @@ const Features = () => {
             <motion.div
               key={idx}
               whileHover={{ y: -10 }}
-              className="p-8 rounded-[2rem] border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-300"
+              className="p-8 rounded-[2rem] border border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 hover:bg-white dark:hover:bg-gray-900 hover:shadow-2xl hover:shadow-indigo-100 dark:hover:shadow-indigo-900/20 transition-all duration-300"
             >
-              <div className={`w-14 h-14 rounded-2xl ${f.color} flex items-center justify-center mb-6 shadow-lg`}>
+              <div className={`w-14 h-14 rounded-2xl ${f.color.replace('bg-', 'dark:bg-opacity-20 bg-')} flex items-center justify-center mb-6 shadow-lg`}>
                 <f.icon className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{f.title}</h3>
-              <p className="text-gray-600 leading-relaxed font-medium">{f.desc}</p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{f.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{f.desc}</p>
             </motion.div>
           ))}
         </div>

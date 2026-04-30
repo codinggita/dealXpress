@@ -1,5 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/auth/authSlice';
+import { toast } from 'react-hot-toast';
 import { 
   LayoutDashboard, 
   Handshake, 
@@ -7,10 +10,23 @@ import {
   BarChart3, 
   Plus, 
   HelpCircle, 
-  UserCircle
+  UserCircle,
+  LogOut,
+  X
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+    toast.success('Logged out successfully');
+    if (onClose) onClose();
+  };
+
   const navItems = [
     { icon: LayoutDashboard, label: 'Marketplace', path: '/marketplace' },
     { icon: Handshake, label: 'Negotiations', path: '/negotiations' },
@@ -19,18 +35,23 @@ const Sidebar = () => {
   ];
 
   const footerItems = [
-    { icon: HelpCircle, label: 'Support', path: '/support' },
+    { icon: HelpCircle, label: 'Support', path: '/contact' },
     { icon: UserCircle, label: 'Account', path: '/account' },
   ];
 
-  return (
-    <aside className="w-64 bg-white border-r border-gray-200/75 flex flex-col h-screen sticky top-0 hidden lg:flex">
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-white">
       {/* Logo Section */}
-      <div className="p-6 pb-4">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl font-black text-indigo-600 tracking-tighter">DealXpress</span>
+      <div className="p-6 pb-4 flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-2xl font-black text-indigo-600 tracking-tighter">DealXpress</span>
+          </div>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Enterprise SaaS</span>
         </div>
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Enterprise SaaS</span>
+        <button onClick={onClose} className="lg:hidden p-2 text-gray-400 hover:text-gray-600">
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Action Button */}
@@ -47,6 +68,7 @@ const Sidebar = () => {
           <NavLink
             key={item.label}
             to={item.path}
+            onClick={() => onClose()}
             className={({ isActive }) => `
               flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200
               ${isActive 
@@ -66,14 +88,56 @@ const Sidebar = () => {
           <NavLink
             key={item.label}
             to={item.path}
+            onClick={() => onClose()}
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <item.icon className="w-5 h-5 text-gray-400" />
             {item.label}
           </NavLink>
         ))}
+        
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 transition-all duration-200"
+        >
+          <LogOut className="w-5 h-5" />
+          Logout
+        </button>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="w-64 bg-white border-r border-gray-200/75 flex flex-col h-screen sticky top-0 hidden lg:flex">
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile Sidebar */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100] lg:hidden"
+            />
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 left-0 w-72 bg-white z-[101] lg:hidden shadow-2xl"
+            >
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

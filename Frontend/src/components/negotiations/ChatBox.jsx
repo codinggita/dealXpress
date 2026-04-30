@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Send, CheckCircle, XCircle } from 'lucide-react';
 
 const ChatBox = ({ 
   messages, 
@@ -10,46 +10,62 @@ const ChatBox = ({
   offerAmount, 
   setOfferAmount, 
   handleSendMessage, 
-  handleTyping,
   messagesEndRef,
   isAccepted,
   onCheckoutClick,
-  currentUserId
+  currentNegotiation,
+  isSeller,
+  onRespond,
+  isLoading
 }) => {
-  const onInputChange = (e) => {
-    setInputMessage(e.target.value);
-    if (handleTyping) handleTyping();
-  };
+  
+  const lastOffer = currentNegotiation?.lastOffer;
+  const canRespond = lastOffer && lastOffer.by !== currentNegotiation.user && currentNegotiation.status !== 'accepted' && currentNegotiation.status !== 'rejected';
+
+  // Determine if current user can respond to the last offer
+  // Note: Backend handles this, but UI should show buttons
+  const showResponseButtons = lastOffer && 
+    ((isSeller && lastOffer.by !== currentNegotiation.seller) || 
+     (!isSeller && lastOffer.by !== currentNegotiation.buyer)) &&
+    currentNegotiation.status === 'active';
   return (
-    <div className="lg:w-2/3 bg-white rounded-2xl border border-gray-200/75 shadow-sm flex flex-col h-full overflow-hidden">
+    <div className="w-full flex-1 bg-white rounded-2xl border border-gray-200/75 shadow-sm flex flex-col h-full overflow-hidden">
       {/* Chat Header */}
       <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
         <div>
-          <h3 className="font-bold text-gray-900">Offer Room</h3>
-          <p className="text-xs text-gray-500 font-medium">Messages are end-to-end encrypted</p>
+          <h3 className="font-bold text-gray-900">Negotiation Room</h3>
+          <p className="text-xs text-gray-500 font-medium">
+            Status: <span className="capitalize text-indigo-600">{currentNegotiation?.status || 'Pending'}</span>
+          </p>
         </div>
         <div className="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-bold text-gray-600 shadow-sm">
-          Live Chat
+          Live
         </div>
       </div>
 
       {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#FCFCFD]">
         <AnimatePresence initial={false}>
-          {messages.map((msg) => (
+          {messages.map((msg, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              key={msg.id || msg._id || Math.random()}
-              className={`flex flex-col max-w-[80%] ${msg.senderId === currentUserId ? 'ml-auto items-end' : 'mr-auto items-start'}`}
+              key={msg._id || idx}
+              className={`flex flex-col max-w-[80%] ${msg.sender === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'}`}
             >
               <div className={`
                 px-4 py-3 rounded-2xl text-[15px] leading-relaxed shadow-sm
-                ${msg.senderId === currentUserId 
+                ${msg.sender === 'user' 
                   ? 'bg-indigo-600 text-white rounded-tr-sm' 
                   : 'bg-white border border-gray-200 text-gray-800 rounded-tl-sm'}
+                ${msg.messageType === 'offer' || msg.messageType === 'counter_offer' ? 'border-2 border-amber-400' : ''}
               `}>
                 {msg.text}
+                {msg.offerValue && (
+                  <div className="mt-2 pt-2 border-t border-white/20 font-bold text-lg">
+                    Amount: ${msg.offerValue}
+                  </div>
+                )}
               </div>
               <span className="text-[11px] text-gray-400 mt-1.5 font-medium px-1">
                 {msg.timestamp}
@@ -75,20 +91,48 @@ const ChatBox = ({
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Response Bar */}
+      {showResponseButtons && (
+        <div className="p-4 bg-amber-50 border-t border-amber-100 flex items-center justify-between">
+          <span className="text-sm font-bold text-amber-800">New offer received: ${lastOffer.value}</span>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => onRespond('reject')}
+              className="px-4 py-2 bg-white border border-red-200 text-red-600 rounded-lg text-sm font-bold hover:bg-red-50 flex items-center gap-1"
+            >
+              <XCircle className="w-4 h-4" /> Reject
+            </button>
+            <button 
+              onClick={() => onRespond('accept')}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-bold hover:bg-green-700 flex items-center gap-1"
+            >
+              <CheckCircle className="w-4 h-4" /> Accept
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Chat Input or Checkout Action */}
       <div className="p-4 bg-white border-t border-gray-100">
         {isAccepted ? (
           <div className="flex flex-col items-center justify-center py-4 space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="text-center">
-              <h4 className="text-lg font-bold text-gray-900">Offer Accepted!</h4>
-              <p className="text-sm text-gray-500">Proceed to checkout to secure your deal.</p>
+              <h4 className="text-lg font-bold text-gray-900">Deal Secured!</h4>
+              <p className="text-sm text-gray-500">The price is locked at ${currentNegotiation?.lastOffer?.value}.</p>
             </div>
-            <button
-              onClick={onCheckoutClick}
-              className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
-            >
-              Proceed to Checkout
-            </button>
+            {!isSeller && (
+              <button
+                onClick={onCheckoutClick}
+                className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
+              >
+                Proceed to Checkout
+              </button>
+            )}
+            {isSeller && (
+              <div className="px-6 py-2 bg-green-100 text-green-700 font-bold rounded-lg border border-green-200">
+                Waiting for buyer to complete payment
+              </div>
+            )}
           </div>
         ) : (
           <form onSubmit={handleSendMessage} className="flex flex-col gap-3">
@@ -102,13 +146,14 @@ const ChatBox = ({
                   type="number"
                   placeholder="Offer amount"
                   value={offerAmount}
+                  disabled={isLoading}
                   onChange={(e) => setOfferAmount(e.target.value)}
-                  className="pl-7 pr-3 py-2 w-full bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                  className="pl-7 pr-3 py-2 w-full bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all disabled:opacity-50"
                 />
               </div>
               {offerAmount && (
                 <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
-                  Ready to offer ${offerAmount}
+                  Submit {isSeller ? 'Counter-Offer' : 'Offer'} of ${offerAmount}
                 </div>
               )}
             </div>
@@ -117,17 +162,21 @@ const ChatBox = ({
             <div className="flex items-center gap-2">
               <input
                 type="text"
-                placeholder="Type a message or add a note to your offer..."
+                placeholder="Type a message..."
                 value={inputMessage}
-                onChange={onInputChange}
+                onChange={setInputMessage}
                 className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
               <button 
                 type="submit"
-                disabled={!inputMessage.trim() && !offerAmount}
+                disabled={(!inputMessage && !offerAmount) || isLoading}
                 className="p-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 transition-colors shadow-md shadow-indigo-600/20 flex-shrink-0"
               >
-                <Send className="w-5 h-5" />
+                {isLoading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
               </button>
             </div>
           </form>

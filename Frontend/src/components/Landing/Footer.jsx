@@ -4,7 +4,7 @@ import Button from '../common/Button';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 border-t border-gray-100 pt-24 pb-12">
+    <footer className="bg-gray-50 dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 pt-24 pb-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-1 md:col-span-1">
@@ -12,52 +12,52 @@ const Footer = () => {
               <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
                 <TrendingUp className="text-white w-6 h-6" />
               </div>
-              <span className="text-2xl font-black text-gray-900">DEALXPRESS</span>
+              <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">DEALXPRESS</span>
             </div>
-            <p className="text-gray-500 font-medium leading-relaxed">
+            <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
               Making global trade simple, secure, and transparent for everyone.
             </p>
           </div>
           
           <div>
-            <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Product</h4>
-            <ul className="flex flex-col gap-4 text-gray-500 font-bold">
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">Security</a></li>
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">Pricing</a></li>
+            <h4 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-6">Product</h4>
+            <ul className="flex flex-col gap-4 text-gray-500 dark:text-gray-400 font-bold">
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a></li>
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Security</a></li>
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Pricing</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Company</h4>
-            <ul className="flex flex-col gap-4 text-gray-500 font-bold">
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-indigo-600 transition-colors">Contact</a></li>
+            <h4 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-6">Company</h4>
+            <ul className="flex flex-col gap-4 text-gray-500 dark:text-gray-400 font-bold">
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Connect</h4>
-            <ul className="flex flex-col gap-4 text-gray-500 font-bold text-sm">
+            <h4 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-6">Connect</h4>
+            <ul className="flex flex-col gap-4 text-gray-500 dark:text-gray-400 font-bold text-sm">
               <li className="flex items-center gap-2">
-                <span className="text-gray-400">Email:</span>
-                <a href="mailto:jilan2410@gmail.com" className="hover:text-indigo-600 transition-colors">jilan2410@gmail.com</a>
+                <span className="text-gray-400 dark:text-gray-600">Email:</span>
+                <a href="mailto:jilan2410@gmail.com" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">jilan2410@gmail.com</a>
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-gray-400">WhatsApp:</span>
-                <a href="https://wa.me/7984088939" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">+91 7984088939</a>
+                <span className="text-gray-400 dark:text-gray-600">WhatsApp:</span>
+                <a href="https://wa.me/7984088939" target="_blank" rel="noreferrer" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">+91 7984088939</a>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-gray-400 font-bold text-sm">© 2026 DealXpress Inc. All rights reserved.</p>
-          <div className="flex gap-8 text-gray-400 font-bold text-sm">
-            <a href="#" className="hover:text-indigo-600 transition-colors">Twitter</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">Dribbble</a>
+        <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-gray-400 dark:text-gray-500 font-bold text-sm">© 2026 DealXpress Inc. All rights reserved.</p>
+          <div className="flex gap-8 text-gray-400 dark:text-gray-500 font-bold text-sm">
+            <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Twitter</a>
+            <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">LinkedIn</a>
+            <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Dribbble</a>
           </div>
         </div>
       </div>

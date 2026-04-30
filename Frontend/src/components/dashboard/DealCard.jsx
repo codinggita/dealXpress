@@ -18,17 +18,17 @@ const DealCard = ({ deal }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group flex flex-col h-full bg-white rounded-2xl border border-gray-200/75 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300"
+      className="group flex flex-col h-full bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/75 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300"
     >
       {/* Image Container */}
-      <div className="relative h-44 bg-[#F8F9FA] p-4 flex items-center justify-center border-b border-gray-100 shrink-0">
+      <div className="relative h-44 bg-[#F8F9FA] dark:bg-gray-800/50 p-4 flex items-center justify-center border-b border-gray-100 dark:border-gray-800 shrink-0">
         <img 
           src={image} 
           alt={title} 
-          className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out"
+          className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal group-hover:scale-105 transition-transform duration-500 ease-out"
         />
         {badge && (
-          <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide text-gray-800 shadow-sm border border-gray-100/50">
+          <div className="absolute top-3 left-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide text-gray-800 dark:text-gray-200 shadow-sm border border-gray-100/50 dark:border-gray-700">
             {badge}
           </div>
         )}
@@ -36,19 +36,19 @@ const DealCard = ({ deal }) => {
 
       {/* Content */}
       <div className="p-4 flex flex-col flex-1">
-        <span className="text-[11px] font-semibold text-indigo-600 uppercase tracking-wider mb-1.5 block line-clamp-1">
+        <span className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1.5 block line-clamp-1">
           {category}
         </span>
-        <h3 className="text-[14px] font-semibold text-gray-900 mb-2 leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2" title={title}>
+        <h3 className="text-[14px] font-semibold text-gray-900 dark:text-white mb-2 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2" title={title}>
           {title}
         </h3>
 
         <div className="mt-auto pt-3">
           <div className="flex flex-col gap-0.5 mb-4">
-            <span className="text-[11px] font-medium text-gray-500 uppercase tracking-wide">
+            <span className="text-[11px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
               {type === 'bid' ? 'Current Bid' : 'Price'}
             </span>
-            <div className="text-xl font-bold text-gray-900">
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
               {price}
             </div>
           </div>

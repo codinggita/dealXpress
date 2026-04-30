@@ -62,14 +62,14 @@ const NegotiationCard = ({ item, index, onViewChat }) => {
           <div className="flex flex-col">
             <span className="text-xs text-gray-500 font-medium mb-0.5 lg:text-right">Original Price</span>
             <span className="text-sm font-semibold text-gray-400 line-through lg:text-right">
-              ${item.originalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              ${(item.originalPrice || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </span>
           </div>
           <div className="hidden lg:block w-full h-px bg-gray-100 my-2" />
           <div className="flex flex-col items-end">
             <span className="text-xs text-indigo-500 font-bold mb-0.5">Your Offer</span>
             <span className="text-lg sm:text-xl font-black text-indigo-600">
-              ${item.currentOffer.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              ${(item.currentOffer || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </span>
           </div>
         </div>

@@ -7,48 +7,61 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    negotiation: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Negotiation',
+    },
     orderId: {
       type: String,
       required: true,
+      unique: true,
     },
     product: {
+      id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
       name: { type: String, required: true },
       image: { type: String, required: true },
+    },
+    shippingAddress: {
+      street: String,
+      city: String,
+      state: String,
+      zipCode: String,
+      country: String,
+    },
+    deliveryDetails: {
+      distance: Number, // in km
+      cost: Number,
+      courierPartner: String,
+      trackingNumber: String,
+      estimatedDeliveryDate: Date,
     },
     status: {
       type: String,
       required: true,
-      default: 'Processing',
+      default: 'placed',
+      enum: ['placed', 'packed', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'],
     },
-    statusColor: {
+    paymentStatus: {
       type: String,
-      required: true,
-      default: 'amber',
+      default: 'pending',
+      enum: ['pending', 'paid', 'failed', 'refunded'],
     },
-    courier: {
-      type: String,
-      required: true,
-      default: 'Assigning Courier...',
-    },
-    trackingId: {
-      type: String,
-      required: true,
-      default: 'Pending',
-    },
-    location: {
-      type: String,
-      required: true,
-    },
-    estDelivery: {
-      type: String,
-      required: true,
-      default: 'In 3-5 Business Days',
-    },
-    progress: {
+    totalAmount: {
       type: Number,
       required: true,
-      default: 10,
     },
+    timeline: [
+      {
+        status: String,
+        timestamp: { type: Date, default: Date.now },
+        description: String,
+      }
+    ]
   },
   {
     timestamps: true,

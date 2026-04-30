@@ -10,7 +10,8 @@ import {
   MousePointer2,
   Users,
   CreditCard,
-  Target
+  Target,
+  Loader2
 } from 'lucide-react';
 
 // Modular Components (Divided into 3 as requested)
@@ -23,105 +24,127 @@ import Button from '../components/common/Button';
 
 // --- Internal Components (The rest remains here) ---
 
+import Spline from '@splinetool/react-spline';
+import { Suspense, useState } from 'react';
+import ErrorBoundary from '../components/common/ErrorBoundary';
+
 const Hero = () => {
+  const [splineError, setSplineError] = useState(false);
+
+  const SplineFallback = () => (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-white">
+      <div className="text-center p-8">
+        <div className="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
+          <Sparkles className="w-10 h-10 text-indigo-600" />
+        </div>
+        <h3 className="text-xl font-black text-gray-900 mb-2">Premium 3D Experience</h3>
+        <p className="text-gray-500 text-sm font-medium">Interactive visualization is loading or temporarily unavailable.</p>
+      </div>
+    </div>
+  );
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-mesh">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8">
-            <Sparkles className="w-4 h-4 text-indigo-600" />
-            <span className="text-sm font-bold text-indigo-600 uppercase tracking-widest">
-              SHOPPING REVOLUTION
-            </span>
-          </div>
-          
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight leading-[1.05]">
-            Shop Smart.<br />
-            <span className="text-gradient">Save More.</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
-            Discover amazing products, negotiate directly for the best price, 
-            and get fast delivery straight to your door.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <Button to="/signup" className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl">
-              Start Free Trial
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button variant="secondary" className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl">
-              Book a Demo
-            </Button>
-          </div>
-        </motion.div>
-
-        {/* Dashboard Preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="relative max-w-5xl mx-auto"
-        >
-          <div className="glass rounded-[2.5rem] p-4 shadow-2xl border-white/50">
-            <div className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 aspect-[16/9] relative shadow-inner">
-               <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-white/50" />
-               <div className="absolute top-0 left-0 w-full h-12 bg-gray-50 border-b border-gray-100 flex items-center px-6 gap-2">
-                 <div className="flex gap-1.5">
-                   <div className="w-3 h-3 rounded-full bg-red-400" />
-                   <div className="w-3 h-3 rounded-full bg-amber-400" />
-                   <div className="w-3 h-3 rounded-full bg-emerald-400" />
-                 </div>
-               </div>
-               <div className="pt-20 px-8 grid grid-cols-3 gap-6 relative z-10">
-                 {/* Mock Product Cards */}
-                 {[1, 2, 3].map(i => (
-                   <div key={i} className="h-36 rounded-2xl bg-white border border-gray-200 shadow-sm p-3 flex flex-col">
-                     <div className="w-full h-16 bg-indigo-50/50 rounded-xl mb-3" />
-                     <div className="w-2/3 h-3 bg-gray-200 rounded-full mb-2" />
-                     <div className="w-1/3 h-3 bg-gray-100 rounded-full mt-auto" />
-                   </div>
-                 ))}
-                 {/* Mock Bottom Section (Table or large card) */}
-                 <div className="col-span-3 h-48 rounded-2xl bg-white border border-gray-200 shadow-sm p-5 flex flex-col">
-                    <div className="w-48 h-4 bg-gray-200 rounded-full mb-4" />
-                    <div className="flex-1 w-full bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center">
-                       <div className="w-1/2 h-2 bg-gray-200 rounded-full" />
-                    </div>
-                 </div>
-               </div>
-            </div>
-          </div>
-          
-          {/* Floating Element */}
-          <motion.div 
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-12 -right-12 hidden lg:block glass p-6 rounded-3xl shadow-2xl border-white/80 w-72"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-left"
           >
-            <div className="flex items-center gap-4 mb-3">
-              <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                <CheckCircle2 className="text-emerald-600 w-7 h-7" />
-              </div>
-              <div>
-                <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Secure Payments</div>
-                <div className="text-xl font-black text-gray-900">Verified Sellers</div>
-              </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-8">
+              <Sparkles className="w-4 h-4 text-indigo-600" />
+              <span className="text-sm font-bold text-indigo-600 uppercase tracking-widest">
+                SHOPPING REVOLUTION
+              </span>
             </div>
-            <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: "94%" }}
-                transition={{ duration: 2, delay: 1 }}
-                className="bg-emerald-500 h-full"
-              />
+            
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight leading-[1.05]">
+              Shop Smart.<br />
+              <span className="text-gradient">Save More.</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-600 max-w-xl mb-12 font-medium leading-relaxed">
+              Discover amazing products, negotiate directly for the best price, 
+              and get fast delivery straight to your door.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mb-10">
+              <Button to="/signup" className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl shadow-xl shadow-indigo-200">
+                Start Free Trial
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button variant="secondary" className="w-full sm:w-auto px-10 py-5 text-lg rounded-2xl">
+                Book a Demo
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-4 text-gray-500 font-medium">
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 overflow-hidden">
+                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 10}`} alt="avatar" />
+                  </div>
+                ))}
+              </div>
+              <span className="text-sm"><strong className="text-gray-900">2.5k+</strong> users joined this week</span>
             </div>
           </motion.div>
-        </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="relative h-[500px] lg:h-[600px] w-full"
+          >
+            {/* Spline 3D Scene with Robust Error Handling */}
+            <div className="absolute inset-0 z-0 rounded-[3rem] overflow-hidden bg-indigo-50/30 border border-indigo-100/50">
+              <ErrorBoundary fallback={<SplineFallback />}>
+                <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-indigo-600" /></div>}>
+                  <Spline 
+                    scene="https://prod.spline.design/kZ6uO6uE7MBjHpwW/scene.splinecode" 
+                  />
+                </Suspense>
+              </ErrorBoundary>
+            </div>
+            
+            {/* Floating UI Elements over 3D */}
+            <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/4 -right-4 glass p-4 rounded-2xl shadow-2xl border-white/50 w-48 hidden md:block z-10"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                  <CreditCard className="w-4 h-4 text-indigo-600" />
+                </div>
+                <div className="text-[10px] font-black text-gray-400 uppercase">Current Offer</div>
+              </div>
+              <div className="text-xl font-black text-gray-900">$1,250.00</div>
+              <div className="text-[10px] text-emerald-600 font-bold mt-1">✓ ACCEPTED BY SELLER</div>
+            </motion.div>
+
+            <motion.div 
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-1/4 -left-8 glass p-4 rounded-2xl shadow-2xl border-white/50 w-56 hidden md:block z-10"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                  <Target className="w-4 h-4 text-amber-600" />
+                </div>
+                <div className="text-[10px] font-black text-gray-400 uppercase">Savings Tracked</div>
+              </div>
+              <div className="text-xl font-black text-gray-900">$18,240.50</div>
+              <div className="w-full bg-gray-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                <div className="bg-amber-500 h-full w-3/4" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

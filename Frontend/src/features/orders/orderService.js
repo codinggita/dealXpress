@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = '/api/orders/';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const API_URL = `${BACKEND_URL}/api/orders/`;
 
 // Create new order
 const createOrder = async (orderData, token) => {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = '/api/negotiations/';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const API_URL = `${BACKEND_URL}/api/negotiations/`;
 
 // Start/Get negotiation
 const startNegotiation = async (negotiationData, token) => {

@@ -52,7 +52,7 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
           }
         };
 
-        const { data } = await axios.post('/api/orders', orderData, config);
+        const { data } = await axios.post((import.meta.env.VITE_BACKEND_URL || '') + '/api/orders', orderData, config);
         
         toast.success('Order placed successfully!');
         if (onBookingComplete) onBookingComplete(data);

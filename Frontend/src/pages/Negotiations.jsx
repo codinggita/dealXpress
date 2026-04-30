@@ -22,7 +22,7 @@ const Negotiations = () => {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        const res = await axios.get('/api/negotiations/my', config);
+        const res = await axios.get((import.meta.env.VITE_BACKEND_URL || '') + '/api/negotiations/my', config);
         const formatted = res.data.map(item => ({
           id: item._id,
           product: {

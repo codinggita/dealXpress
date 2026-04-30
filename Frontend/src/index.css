@@ -6,6 +6,9 @@
   --color-indigo-700: #4338ca;
 }
 
+/* Force class-based dark mode in Tailwind 4 */
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
 }
@@ -19,6 +22,12 @@ body {
   background-color: #ffffff;
   color: #0f172a;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-color: #030712;
+  color: #f8fafc;
 }
 
 .glass {
@@ -26,6 +35,11 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(17, 24, 39, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .text-gradient {
@@ -41,4 +55,14 @@ body {
     radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(79, 70, 229, 0.1) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(124, 58, 237, 0.1) 0px, transparent 50%);
+  transition: background-color 0.3s ease;
+}
+
+.dark .bg-mesh {
+  background-color: #030712;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
 }

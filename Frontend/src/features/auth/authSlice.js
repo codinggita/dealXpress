@@ -52,7 +52,8 @@ export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
   async (userData, thunkAPI) => {
     try {
-      return await authService.updateProfile(userData);
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.updateProfile(userData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -70,7 +71,8 @@ export const updatePassword = createAsyncThunk(
   'auth/updatePassword',
   async (passwordData, thunkAPI) => {
     try {
-      return await authService.changePassword(passwordData);
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.changePassword(passwordData, token);
     } catch (error) {
       const message =
         (error.response &&

@@ -30,8 +30,13 @@ const logout = () => {
 };
 
 // Update user profile
-const updateProfile = async (userData) => {
-  const response = await axios.put(API_URL + 'profile', userData);
+const updateProfile = async (userData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.put(API_URL + 'profile', userData, config);
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
@@ -39,8 +44,13 @@ const updateProfile = async (userData) => {
 };
 
 // Change password
-const changePassword = async (passwordData) => {
-  const response = await axios.put(API_URL + 'password', passwordData);
+const changePassword = async (passwordData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.put(API_URL + 'password', passwordData, config);
   return response.data;
 };
 

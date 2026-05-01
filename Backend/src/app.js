@@ -31,10 +31,27 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+// ─── CORS — Allow both local dev and production ───────────────────────────────
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+  'https://deal-xpress.vercel.app',
+  process.env.FRONTEND_URL,
+].filter(Boolean).map(o => o.replace(/\/$/, '')); // strip trailing slashes
+
 app.use(cors({
-  origin: allowedOrigin.endsWith('/') ? allowedOrigin.slice(0, -1) : allowedOrigin,
-  credentials: true
+  origin: (origin, callback) => {
+    // Allow server-to-server / Postman (no origin header)
+    if (!origin) return callback(null, true);
+
+    const clean = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(clean)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS blocked: ${origin}`), false);
+  },
+  credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

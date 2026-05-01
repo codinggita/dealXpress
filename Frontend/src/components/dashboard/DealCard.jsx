@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import Button from '../common/Button';
 
@@ -7,8 +8,14 @@ const DealCard = ({ deal }) => {
   const navigate = useNavigate();
   const { title, category, price, image, badge, type = 'price' } = deal;
 
+  const { user } = useSelector((state) => state.auth);
+
   const handleMakeOffer = (e) => {
     e.stopPropagation();
+    if (!user) {
+      navigate('/login', { state: { from: '/marketplace', deal } });
+      return;
+    }
     navigate('/negotiation-room', { state: { deal } });
   };
 

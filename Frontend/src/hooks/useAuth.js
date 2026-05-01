@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-export const useAuth = () => {
+const useAuth = () => {
   const { user, isLoading, isError, message } = useSelector((state) => state.auth);
   
   return {
@@ -11,3 +11,5 @@ export const useAuth = () => {
     isAuthenticated: !!user,
   };
 };
+
+export default useAuth;

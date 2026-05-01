@@ -55,10 +55,19 @@ const Account = () => {
 
   const handleAvatarUpload = () => {
     if (!avatarFile) return toast.error('Please select an image first');
-    // In a real app, upload avatarFile to backend/cloudinary here
-    toast.success('Profile photo updated!');
-    setShowAvatarUpload(false);
-    trackEvent('avatar_upload', 'Account');
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(avatarFile);
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      dispatch(updateProfile({ avatar: base64String }));
+      toast.success('Profile photo updated!');
+      setShowAvatarUpload(false);
+      trackEvent('avatar_upload', 'Account');
+    };
+    reader.onerror = () => {
+      toast.error('Failed to read file');
+    };
   };
 
   const handleUpdateProfile = (e) => {
@@ -368,7 +377,7 @@ const Account = () => {
               </p>
 
               <FileUpload
-                onFileSelect={setAvatarFile}
+                onUpload={setAvatarFile}
                 currentImage={null}
               />
 

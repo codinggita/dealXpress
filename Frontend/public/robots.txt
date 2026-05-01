@@ -1,0 +1,17 @@
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Private paths that shouldn't be indexed
+Disallow: /negotiations
+Disallow: /delivery-tracking
+Disallow: /analytics
+Disallow: /account
+Disallow: /negotiation-room/
+
+# Host
+Host: https://deal-xpress.vercel.app
+
+# Sitemaps
+Sitemap: https://deal-xpress.vercel.app/sitemap.xml

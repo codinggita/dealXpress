@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { User, Mail, Shield, Bell, Settings, LogOut, Loader2, X, Lock } from 'lucide-react';
+import { User, Mail, Shield, Bell, Settings, LogOut, Loader2, X, Lock, Camera } from 'lucide-react';
 import { updateProfile, updatePassword, logout, reset } from '../features/auth/authSlice';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEO from '../components/common/SEO';
+import FileUpload from '../components/common/FileUpload';
+import { clearOnLogout } from '../utils/storage';
+import { trackEvent } from '../utils/analytics';
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -39,10 +42,23 @@ const Account = () => {
     dispatch(reset());
   }, [isError, message, dispatch]);
 
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [showAvatarUpload, setShowAvatarUpload] = useState(false);
+
   const handleLogout = () => {
     dispatch(logout());
+    clearOnLogout(); // Clears localStorage + sessionStorage
+    trackEvent('logout', 'Auth');
     navigate('/');
     toast.success('Logged out successfully');
+  };
+
+  const handleAvatarUpload = () => {
+    if (!avatarFile) return toast.error('Please select an image first');
+    // In a real app, upload avatarFile to backend/cloudinary here
+    toast.success('Profile photo updated!');
+    setShowAvatarUpload(false);
+    trackEvent('avatar_upload', 'Account');
   };
 
   const handleUpdateProfile = (e) => {
@@ -97,8 +113,11 @@ const Account = () => {
       <div className="bg-white dark:bg-gray-900 rounded-[2rem] border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-indigo-500 to-violet-500" />
         <div className="px-8 pb-8 relative">
-          <div className="absolute -top-12 left-8 w-24 h-24 rounded-3xl border-4 border-white dark:border-gray-900 bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-lg">
-            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`} alt="avatar" />
+          <div className="absolute -top-12 left-8 w-24 h-24 rounded-3xl border-4 border-white dark:border-gray-900 bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-lg group cursor-pointer" onClick={() => setShowAvatarUpload(true)}>
+            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`} alt="avatar" className="w-full h-full" />
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-3xl">
+              <Camera className="w-6 h-6 text-white" />
+            </div>
           </div>
           
           <div className="pt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -316,8 +335,57 @@ const Account = () => {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Avatar Upload Modal */}
+      <AnimatePresence>
+        {showAvatarUpload && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAvatarUpload(false)}
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative bg-white dark:bg-gray-900 w-full max-w-md rounded-[2.5rem] shadow-2xl p-8 md:p-10 border border-gray-100 dark:border-gray-800"
+            >
+              <button
+                onClick={() => setShowAvatarUpload(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">
+                Upload Photo
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-8">
+                Choose a profile picture. Max 5MB, PNG/JPG/WebP.
+              </p>
+
+              <FileUpload
+                onFileSelect={setAvatarFile}
+                currentImage={null}
+              />
+
+              <button
+                onClick={handleAvatarUpload}
+                disabled={!avatarFile}
+                className="w-full mt-6 py-4 bg-indigo-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Save Photo
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default Account;
+

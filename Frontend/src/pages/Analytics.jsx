@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, PieChart as RePieChart, Pie } from 'recharts';
-import { TrendingUp, Users, ShoppingBag, DollarSign, ArrowUpRight, ArrowDownRight, Loader2, Calendar, Download } from 'lucide-react';
+import { Download, Calendar, Loader2, DollarSign, ShoppingBag, TrendingUp, Users, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { DataGrid } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme, Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import SEO from '../components/common/SEO';
+import { useSelector } from 'react-redux';
 
 const Analytics = () => {
+  const { darkMode } = useSelector((state) => state.ui || { darkMode: false });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const muiTheme = React.useMemo(() => createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: { main: '#4f46e5' },
+      background: {
+        default: darkMode ? '#0f172a' : '#ffffff',
+        paper: darkMode ? '#1e293b' : '#ffffff',
+      }
+    },
+  }), [darkMode]);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -49,6 +64,20 @@ const Analytics = () => {
     { label: 'New Users', value: '1,284', change: '-3.4%', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
   ];
 
+  const handleExport = () => {
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + "Metric,Value,Change\n"
+      + stats.map(s => `${s.label},${s.value.replace(/,/g, '')},${s.change}`).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `analytics_report_${new Date().toLocaleDateString()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (loading) {
     return (
       <div className="h-[60vh] flex items-center justify-center">
@@ -74,7 +103,10 @@ const Analytics = () => {
             <Calendar className="w-4 h-4 text-gray-400" />
             Last 30 Days
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 cursor-pointer">
+          <button 
+            onClick={handleExport}
+            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 cursor-pointer"
+          >
             <Download className="w-4 h-4" />
             Export
           </button>
@@ -203,29 +235,45 @@ const Analytics = () => {
         </div>
       </div>
       
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm">
-        <h3 className="text-lg font-black text-gray-900 dark:text-white mb-8">Recent Transactions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {orders.slice(0, 6).map((order) => (
-            <div key={order.orderId} className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 group hover:bg-white dark:hover:bg-gray-800 hover:shadow-md transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-                  <img src={order.product.image} alt="" className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal" />
-                </div>
-                <div>
-                  <div className="text-sm font-black text-gray-900 dark:text-white line-clamp-1">{order.product.name}</div>
-                  <div className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">{order.orderId}</div>
-                </div>
-              </div>
-              <div className="text-sm font-black text-emerald-600 dark:text-emerald-400">+${order.amount || 0}</div>
-            </div>
-          ))}
-          {orders.length === 0 && (
-            <div className="col-span-full text-center py-12">
-              <p className="text-sm font-bold text-gray-400 dark:text-gray-500">No recent transactions</p>
-            </div>
-          )}
-        </div>
+      <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
+        <h3 className="text-lg font-black text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+          <Loader2 className="w-5 h-5 text-indigo-500" />
+          MUI Performance Log
+        </h3>
+        <ThemeProvider theme={muiTheme}>
+          <Box sx={{ height: 400, width: '100%' }}>
+            <DataGrid 
+              rows={orders.map((o, i) => ({ id: i, ...o }))} 
+              columns={[
+                { field: 'id', headerName: 'ID', width: 70 },
+                { field: 'productName', headerName: 'Product', flex: 1, valueGetter: (p) => p.row.product?.name || 'N/A' },
+                { field: 'amount', headerName: 'Price', width: 120, renderCell: (p) => <span className="font-bold text-emerald-500">${p.value}</span> },
+                { field: 'status', headerName: 'Status', width: 130 }
+              ]} 
+              pageSizeOptions={[5]}
+              initialState={{ pagination: { paginationModel: { pageSize: 5 } } }}
+              sx={{ 
+                border: 'none',
+                color: darkMode ? '#f1f5f9 !important' : '#1e293b !important',
+                '& .MuiDataGrid-cell': { 
+                  borderBottom: darkMode ? '1px solid #334155' : '1px solid #f1f5f9', 
+                  color: darkMode ? '#f1f5f9 !important' : '#1e293b !important' 
+                },
+                '& .MuiDataGrid-columnHeaders': { 
+                  backgroundColor: darkMode ? '#1e293b !important' : '#f8fafc !important', 
+                  color: darkMode ? '#f1f5f9 !important' : '#1e293b !important' 
+                },
+                '& .MuiDataGrid-footerContainer': {
+                  backgroundColor: darkMode ? '#1e293b !important' : '#ffffff !important',
+                  color: darkMode ? '#f1f5f9 !important' : '#1e293b !important'
+                },
+                '& .MuiTablePagination-root': {
+                  color: darkMode ? '#f1f5f9 !important' : '#1e293b !important'
+                }
+              }}
+            />
+          </Box>
+        </ThemeProvider>
       </div>
     </div>
   );

@@ -7,7 +7,10 @@ import {
   getNegotiationMessages, 
   addMessage, 
   updateNegotiation,
-  startNegotiation 
+  startNegotiation,
+  sendMessage,
+  submitOffer,
+  respondToOffer 
 } from '../features/negotiation/negotiationSlice';
 import { 
   initiateSocketConnection, 
@@ -51,10 +54,19 @@ const NegotiationRoom = () => {
 
   const deal = location.state?.deal || currentNegotiation;
 
-  // Fetch Lottie JSONs
+  // Fetch Lottie JSONs with safety
   useEffect(() => {
-    fetch(TYPING_LOTTIE).then(res => res.json()).then(data => setTypingAnimation(data));
-    fetch(SUCCESS_LOTTIE).then(res => res.json()).then(data => setSuccessAnimation(data));
+    const fetchLotties = async () => {
+      try {
+        const tRes = await fetch(TYPING_LOTTIE);
+        if (tRes.ok) setTypingAnimation(await tRes.json());
+        const sRes = await fetch(SUCCESS_LOTTIE);
+        if (sRes.ok) setSuccessAnimation(await sRes.json());
+      } catch (e) {
+        console.warn("Lottie fetch failed");
+      }
+    };
+    fetchLotties();
   }, []);
 
   // Socket Connection
@@ -140,32 +152,22 @@ const NegotiationRoom = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    const negId = currentNegotiation?._id;
+    const negId = id || currentNegotiation?._id;
     if (!negId) return;
 
     if (offerAmount) {
-      try {
-        await negotiationService.submitOffer(negId, offerAmount, user.token);
-        setOfferAmount('');
-      } catch (err) {
-        toast.error(err.response?.data?.message || "Failed to submit offer");
-      }
+      dispatch(submitOffer({ id: negId, value: offerAmount }));
+      setOfferAmount('');
     } else if (inputMessage.trim()) {
-      try {
-        await negotiationService.sendMessage(negId, inputMessage, user.token);
-        setInputMessage('');
-      } catch (err) {
-        toast.error("Failed to send message");
-      }
+      dispatch(sendMessage({ id: negId, text: inputMessage }));
+      setInputMessage('');
     }
   };
 
   const handleOfferResponse = async (action) => {
-    try {
-      await negotiationService.respondToOffer(currentNegotiation._id, action, user.token);
-    } catch (err) {
-      toast.error("Failed to respond to offer");
-    }
+    const negId = id || currentNegotiation?._id;
+    if (!negId) return;
+    dispatch(respondToOffer({ id: negId, action }));
   };
 
   if (!deal && !currentNegotiation) return <div className="p-8 text-center">Loading negotiation...</div>;

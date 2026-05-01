@@ -47,6 +47,42 @@ export const getNegotiationMessages = createAsyncThunk(
   }
 );
 
+export const sendMessage = createAsyncThunk(
+  'negotiation/sendMessage',
+  async ({ id, text }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await negotiationService.sendMessage(id, text, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const submitOffer = createAsyncThunk(
+  'negotiation/submitOffer',
+  async ({ id, value }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await negotiationService.submitOffer(id, value, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const respondToOffer = createAsyncThunk(
+  'negotiation/respondToOffer',
+  async ({ id, action }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await negotiationService.respondToOffer(id, action, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 export const negotiationSlice = createSlice({
   name: 'negotiation',
   initialState,
@@ -62,9 +98,6 @@ export const negotiationSlice = createSlice({
     },
     updateNegotiation: (state, action) => {
       state.currentNegotiation = action.payload;
-    },
-    setTyping: (state, action) => {
-      // Logic for typing indicators if needed in state
     }
   },
   extraReducers: (builder) => {
@@ -104,6 +137,17 @@ export const negotiationSlice = createSlice({
       .addCase(getNegotiationMessages.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
+      })
+      .addCase(submitOffer.fulfilled, (state, action) => {
+        state.currentNegotiation = action.payload.negotiation;
+        state.messages.push(action.payload.message);
+      })
+      .addCase(respondToOffer.fulfilled, (state, action) => {
+        state.currentNegotiation = action.payload.negotiation;
+        state.messages.push(action.payload.message);
       });
   },
 });

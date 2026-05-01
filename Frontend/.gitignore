@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 package-info.JSONC
 .env
+.env.*
+env.dev.bak
+env.prod.bak

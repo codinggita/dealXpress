@@ -86,12 +86,16 @@ In the current digital landscape, e-commerce platforms often impose a rigid, fix
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | React 19, Vite, Tailwind CSS 4, Redux Toolkit, Framer Motion, Spline (3D), Recharts, Lucide Icons |
-| **Backend** | Node.js, Express 5, Socket.io, JWT, Google OAuth, Express-Async-Handler, Morgan |
-| **Database** | MongoDB Atlas, Mongoose |
-| **Logistics** | Custom Pricing Algorithm & Tracking System |
+| **Frontend Core** | React 19, Redux Toolkit, React Router 7, Axios |
+| **UI & Styling** | Tailwind CSS 4, Material UI (MUI), Framer Motion, Spline (3D), Lucide Icons |
+| **Backend Core** | Node.js, Express 5, Socket.io (Real-time), Express-Async-Handler |
+| **Database & Auth** | MongoDB Atlas, Mongoose, JWT, Google OAuth 2.0, BcryptJS |
+| **Experience** | Lenis (Smooth Scroll), React Flow, Recharts (Analytics), Lottie React |
+| **Security & Utilities** | Helmet, Express-Rate-Limit, Morgan, Nodemailer, Validator |
+| **Build & Tooling** | Vite, PostCSS, ESLint, Nodemon |
 
 ---
+
 
 ## 📁 Project Structure
 
@@ -219,15 +223,6 @@ DealXpress implements a robust routing system with multi-level access control to
 
 ---
 
-## ✅ Final Project Update (May 1, 2026)
-The project is now officially **COMPLETE** and industry-ready. The final phase focused on:
-*   **Comprehensive Audit:** Verified all features against industry-standard checklists.
-*   **Auth Stabilization:** Fixed profile photo persistence and synchronized local state with backend tokens.
-*   **UI/UX Polishing:** Finalized Dark Mode consistency across all modules (`Marketplace`, `Analytics`, `Auth`).
-*   **Production Readiness:** Optimized API endpoints with environment variables and resolved CORS/Socket.io routing for Vercel/Render deployments.
-*   **Performance:** Refined loading states and error handling for a seamless user experience.
-
----
 
 ## 📜 License
 This project is licensed under the MIT License.

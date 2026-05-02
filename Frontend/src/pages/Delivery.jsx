@@ -59,10 +59,13 @@ const Delivery = () => {
     if (user?.token) fetchOrders();
   }, [user]);
 
-  const filteredOrders = orders.filter(order => 
-    order.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.orderId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredOrders = orders.filter(order => {
+    const orderIdMatch = order.orderId.toLowerCase().includes(searchTerm.toLowerCase());
+    const itemMatch = order.orderItems?.some(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return orderIdMatch || itemMatch;
+  });
 
   const stats = [
     { label: 'In Transit', count: orders.filter(o => !['delivered', 'cancelled'].includes(o.status)).length, icon: Truck, color: 'text-indigo-600', bg: 'bg-indigo-50' },
@@ -143,12 +146,28 @@ const Delivery = () => {
                 <div className="p-6 md:p-8 flex flex-col lg:flex-row lg:items-center gap-8">
                   {/* Product Info */}
                   <div className="flex items-center gap-5 lg:w-1/3">
-                    <div className="w-20 h-20 bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shrink-0 shadow-inner">
-                      <img src={order.product.image} alt={order.product.name} className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal" />
+                    <div className="w-20 h-20 bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shrink-0 shadow-inner relative">
+                      <img 
+                        src={order.orderItems?.[0]?.image || '/placeholder.png'} 
+                        alt={order.orderItems?.[0]?.name} 
+                        className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal" 
+                      />
+                      {order.orderItems?.length > 1 && (
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center text-white text-xs font-black">
+                          +{order.orderItems.length - 1}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <div className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.2em] mb-1">{order.orderId}</div>
-                      <h3 className="text-lg font-black text-gray-900 dark:text-white leading-tight">{order.product.name}</h3>
+                      <h3 className="text-lg font-black text-gray-900 dark:text-white leading-tight">
+                        {order.orderItems?.[0]?.name || 'Order Details'}
+                      </h3>
+                      {order.orderItems?.length > 1 && (
+                        <p className="text-[11px] text-gray-400 font-bold mt-1 uppercase tracking-widest">
+                          & {order.orderItems.length - 1} other items
+                        </p>
+                      )}
                     </div>
                   </div>
 

@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, HelpCircle, Settings, X, MessageSquare, Info, Menu } from 'lucide-react';
+import { Search, Bell, HelpCircle, Settings, X, MessageSquare, Info, Menu, ShoppingCart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import ThemeToggle from '../common/ThemeToggle';
+import CartDrawer from '../cart/CartDrawer';
 
 const DashboardNavbar = ({ onMenuClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  const { cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -63,6 +68,18 @@ const DashboardNavbar = ({ onMenuClick }) => {
         >
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900" />
+        </button>
+
+        <button 
+          onClick={() => setIsCartOpen(true)}
+          className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all relative cursor-pointer"
+        >
+          <ShoppingCart className="w-5 h-5" />
+          {cartItems.length > 0 && (
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-indigo-600 text-white text-[10px] font-black rounded-full border-2 border-white dark:border-gray-900 flex items-center justify-center px-1">
+              {cartItems.length}
+            </span>
+          )}
         </button>
 
         <button 
@@ -128,6 +145,7 @@ const DashboardNavbar = ({ onMenuClick }) => {
           )}
         </AnimatePresence>
       </div>
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };

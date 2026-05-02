@@ -24,6 +24,7 @@ const Delivery        = lazy(() => import('./pages/Delivery'));
 const Analytics       = lazy(() => import('./pages/Analytics'));
 const Contact         = lazy(() => import('./pages/Contact'));
 const Account         = lazy(() => import('./pages/Account'));
+const Checkout        = lazy(() => import('./pages/Checkout'));
 const DashboardLayout = lazy(() => import('./components/layouts/DashboardLayout'));
 
 // ─────────────────────────────────────────────
@@ -135,6 +136,7 @@ function App() {
               <Route path="/delivery" element={<Delivery />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/dashboard" element={<Navigate to="/marketplace" replace />} />
             </Route>
 

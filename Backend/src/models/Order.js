@@ -21,11 +21,18 @@ const orderSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    product: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      name: { type: String, required: true },
-      image: { type: String, required: true },
-    },
+    orderItems: [
+      {
+        name: { type: String, required: true },
+        qty: { type: Number, required: true },
+        image: { type: String, required: true },
+        price: { type: Number, required: true },
+        product: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     shippingAddress: {
       street: String,
       city: String,

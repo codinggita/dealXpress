@@ -7,32 +7,35 @@ import * as deliveryService from '../services/deliveryService.js';
 // @access  Private
 const createOrder = asyncHandler(async (req, res) => {
   const { 
-    productId, 
-    productName, 
-    productImage, 
-    amount, 
+    orderItems, 
     shippingAddress,
-    sellerId,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
     negotiationId 
   } = req.body;
 
-  // Simulate distance calculation (in a real app, use Maps API)
-  const distance = Math.floor(Math.random() * 500) + 10; // 10 to 510 km
-  const deliveryCost = deliveryService.calculateDeliveryCost(distance);
-  const totalAmount = amount + deliveryCost;
+  if (orderItems && orderItems.length === 0) {
+    res.status(400);
+    throw new Error('No order items');
+    return;
+  }
+
+  // Simulate distance calculation if not provided
+  const distance = Math.floor(Math.random() * 500) + 10; 
+  const deliveryCost = shippingPrice || deliveryService.calculateDeliveryCost(distance);
+  const finalTotal = totalPrice || (itemsPrice + deliveryCost);
 
   const orderId = `DX-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
 
   const order = await Order.create({
     user: req.user._id,
-    seller: sellerId || '65f1234567890abcdef12345', // Fallback for demo
+    seller: orderItems[0].seller || '65f1234567890abcdef12345',
     negotiation: negotiationId,
     orderId,
-    product: {
-      id: productId,
-      name: productName,
-      image: productImage,
-    },
+    orderItems,
     shippingAddress,
     deliveryDetails: {
       distance,
@@ -40,7 +43,8 @@ const createOrder = asyncHandler(async (req, res) => {
       courierPartner: 'Pending Assignment',
       estimatedDeliveryDate: deliveryService.getEstimatedDeliveryDate(distance),
     },
-    totalAmount,
+    totalAmount: finalTotal,
+    paymentStatus: 'pending',
     timeline: [{
       status: 'placed',
       description: 'Order has been placed successfully.'

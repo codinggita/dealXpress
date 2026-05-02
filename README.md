@@ -32,6 +32,21 @@
 
 ---
 
+## ❓ The Problem Statement
+In the current digital landscape, e-commerce platforms often impose a rigid, fixed-price model that fails to accommodate the dynamic nature of B2B or high-value C2C transactions. This lack of flexibility leads to:
+*   **Fragmented Communication:** Buyers and sellers are forced to use third-party apps (WhatsApp, Email) to negotiate, leading to security risks and lost data.
+*   **Logistics Disconnect:** After a price is agreed upon externally, there is often no direct link to a reliable delivery system, causing delays and friction.
+*   **Lack of Transparency:** Real-time updates on offer statuses and shipping progress are rarely unified in a single dashboard.
+
+## 💡 The Solution
+**DealXpress** solves these challenges by providing an all-in-one ecosystem where negotiation and logistics coexist.
+*   **Integrated Negotiation Engine:** A dedicated, real-time environment for making, countering, and accepting offers without leaving the platform.
+*   **Seamless Logistics Integration:** Instant shipping quotes and one-click booking as soon as a deal is finalized.
+*   **Unified Command Center:** A comprehensive analytics dashboard that tracks every stage of the transaction—from the first offer to the final delivery.
+
+---
+
+
 <p align="center">
   <img src="./Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
 </p>

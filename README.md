@@ -30,6 +30,7 @@
 ---
 
 ## 🔗 Live Demo & Documentation
+Access the live platform, API documentation, and design prototypes through the links below:
 
 *   🌐 **Frontend (Vercel)** — [deal-xpress.vercel.app](https://deal-xpress.vercel.app)
 *   ⚙️ **Backend (Render)** — [dealxpress.onrender.com](https://dealxpress.onrender.com)

@@ -1,8 +1,5 @@
 # 🚀 DealXpress - The Ultimate Marketplace & Logistics Ecosystem
 
-<p align="center">
-  <img src="./Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
-</p>
 
 
 <p align="center">
@@ -34,6 +31,10 @@
 - **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
 
 ---
+
+<p align="center">
+  <img src="./Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
+</p>
 
 ## ✨ Full Feature List
 

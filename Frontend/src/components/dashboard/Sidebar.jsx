@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 import { toast } from 'react-hot-toast';
 import { 
@@ -12,13 +12,15 @@ import {
   HelpCircle, 
   UserCircle,
   LogOut,
-  X
+  X,
+  Package
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -27,8 +29,11 @@ const Sidebar = ({ isOpen, onClose }) => {
     if (onClose) onClose();
   };
 
+  const isSeller = user?.role === 'supplier' || user?.role === 'admin';
+
   const navItems = [
     { icon: LayoutDashboard, label: 'Marketplace', path: '/marketplace' },
+    ...(isSeller ? [{ icon: Package, label: 'My Products', path: '/seller-products' }] : []),
     { icon: Handshake, label: 'Negotiations', path: '/negotiations' },
     { icon: Truck, label: 'Delivery Tracking', path: '/delivery' },
     { icon: BarChart3, label: 'Analytics', path: '/analytics' },
@@ -47,20 +52,25 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="flex items-center gap-2 mb-1">
             <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400 tracking-tighter">DealXpress</span>
           </div>
-          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Enterprise SaaS</span>
+          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{isSeller ? 'Seller Hub' : 'Enterprise SaaS'}</span>
         </div>
         <button onClick={onClose} className="lg:hidden p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
           <X className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Action Button */}
-      <div className="px-4 mb-6">
-        <button className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
-          <Plus className="w-4 h-4" />
-          New Offer
-        </button>
-      </div>
+      {/* Action Button - Only for Sellers */}
+      {isSeller && (
+        <div className="px-4 mb-6">
+          <button 
+            onClick={() => { navigate('/seller-products'); if (onClose) onClose(); }}
+            className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 rounded-xl shadow-md shadow-emerald-600/20 hover:shadow-lg hover:shadow-emerald-600/40 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Add Product
+          </button>
+        </div>
+      )}
 
       {/* Navigation Links */}
       <nav className="flex-1 px-3 space-y-1">
@@ -76,7 +86,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 : 'text-gray-500 dark:text-gray-400 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'}
             `}
           >
-            <item.icon className={`w-5 h-5 ${item.path === '/marketplace' ? 'text-indigo-600 dark:text-indigo-400' : ''} transition-colors`} />
+            <item.icon className={`w-5 h-5 ${item.path === '/marketplace' || item.path === '/seller-products' ? 'text-indigo-600 dark:text-indigo-400' : ''} transition-colors`} />
             {item.label}
           </NavLink>
         ))}

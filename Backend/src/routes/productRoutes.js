@@ -4,11 +4,11 @@ import {
   getProductById,
   createProduct,
 } from '../controllers/productController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.route('/').get(getProducts).post(protect, createProduct);
+router.route('/').get(getProducts).post(protect, authorize('supplier', 'admin'), createProduct);
 router.route('/:id').get(getProductById);
 
 export default router;

@@ -46,9 +46,20 @@ In the current digital landscape, e-commerce platforms often impose a rigid, fix
 
 ---
 
+## 📸 Platform Preview
 
 <p align="center">
   <img src="./Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
+</p>
+
+<p align="center">
+  <img src="./Frontend/public/negotiation.png" alt="Negotiation Room" width="49%">
+  <img src="./Frontend/public/analytics.png" alt="Analytics Dashboard" width="49%">
+</p>
+
+<p align="center">
+  <img src="./Frontend/public/tracking.png" alt="Delivery Tracking" width="49%">
+  <img src="./Frontend/public/contact.png" alt="Support & Contact" width="49%">
 </p>
 
 ## ✨ Full Feature List

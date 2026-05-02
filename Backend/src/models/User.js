@@ -27,6 +27,15 @@ const userSchema = mongoose.Schema(
       default: 'user',
       enum: ['user', 'admin', 'supplier', 'buyer'],
     },
+    shopName: {
+      type: String,
+    },
+    gstNumber: {
+      type: String,
+    },
+    businessCategory: {
+      type: String,
+    },
     resetPasswordOTP: {
       type: String,
     },

@@ -28,7 +28,20 @@ const Analytics = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get((import.meta.env.VITE_BACKEND_URL || '') + '/api/orders/my');
-        setOrders(res.data);
+        let data = res.data;
+        
+        // Fallback for Demo if list is empty
+        if (data.length === 0) {
+          data = [
+            { amount: 1250, status: 'delivered', product: { name: 'iPhone 15 Pro' } },
+            { amount: 2100, status: 'shipped', product: { name: 'MacBook Air M2' } },
+            { amount: 850, status: 'delivered', product: { name: 'AirPods Max' } },
+            { amount: 450, status: 'delivered', product: { name: 'Magic Keyboard' } },
+            { amount: 120, status: 'cancelled', product: { name: 'USB-C Cable' } },
+          ];
+        }
+
+        setOrders(data);
       } catch (err) {
         console.error("Failed to fetch orders:", err);
       } finally {

@@ -1,11 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import { ShoppingCart } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../features/cart/cartSlice';
+import { toast } from 'react-hot-toast';
 import Button from '../common/Button';
 
 const DealCard = ({ deal }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { title, category, price, image, badge, type = 'price' } = deal;
 
   const { user } = useSelector((state) => state.auth);
@@ -17,6 +21,23 @@ const DealCard = ({ deal }) => {
       return;
     }
     navigate('/negotiation-room', { state: { deal } });
+  };
+  
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    // Parse numeric price from string like "$12.00"
+    const numericPrice = typeof price === 'string' 
+      ? parseFloat(price.replace('$', '')) 
+      : price;
+      
+    dispatch(addToCart({ 
+      _id: deal.id || deal._id, 
+      name: title, 
+      price: numericPrice, 
+      image, 
+      category 
+    }));
+    toast.success('Added to Cart!');
   };
 
   return (
@@ -60,12 +81,21 @@ const DealCard = ({ deal }) => {
             </div>
           </div>
 
-          <button 
-            onClick={handleMakeOffer}
-            className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200"
-          >
-            Make Offer
-          </button>
+          <div className="flex gap-2">
+            <button 
+              onClick={handleMakeOffer}
+              className="flex-1 py-2.5 text-[13px] font-black text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200 uppercase tracking-wider"
+            >
+              Negotiate
+            </button>
+            <button 
+              onClick={handleAddToCart}
+              className="p-2.5 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-750 transition-all active:scale-95 border border-gray-200/50 dark:border-gray-700"
+              title="Add to Cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>

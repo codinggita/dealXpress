@@ -1,8 +1,6 @@
 # 🎨 DealXpress Frontend
 
-<p align="center">
-  <img src="../Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
-</p>
+
 
 ## ✨ The Vision
 The **DealXpress Frontend** is a premium, high-performance web interface designed for the modern marketplace. It combines cutting-edge 3D visuals, fluid animations, and real-time state synchronization to deliver an unparalleled user experience.

@@ -17,14 +17,46 @@ const Negotiations = () => {
     const fetchMyNegotiations = async () => {
       try {
         const res = await axiosInstance.get('/api/negotiations/my');
-        const formatted = res.data.map(item => ({
-          id: item._id,
-          productName: item.productData?.name || item.product?.name || 'Deleted Product',
-          productImage: item.productData?.image || item.product?.image || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=200',
-          seller: item.seller?.name || 'Premium Seller',
-          currentOffer: item.currentOffer,
-          status: item.status,
-        }));
+        let formatted = res.data.map(item => {
+          const sellerId = (item.seller?._id || item.seller)?.toString();
+          const userId = user?._id?.toString();
+          const isSeller = sellerId === userId;
+
+          return {
+            id: item._id,
+            productName: item.productData?.name || item.product?.name || 'Deleted Product',
+            productImage: item.productData?.image || item.product?.image || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=200',
+            otherParty: isSeller ? (item.buyer?.name || 'Interested Buyer') : (item.seller?.name || 'Premium Seller'),
+            isSeller,
+            currentOffer: item.currentOffer,
+            status: item.status,
+          };
+        });
+
+        // Fallback for Demo
+        if (formatted.length === 0 && user?.role === 'supplier') {
+          formatted = [
+            {
+              id: 'neg_dummy_1',
+              productName: 'MacBook Pro M3 Max',
+              productImage: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=200',
+              otherParty: 'Corporate Buyer Ltd',
+              isSeller: true,
+              currentOffer: 2450,
+              status: 'active',
+            },
+            {
+              id: 'neg_dummy_2',
+              productName: 'Sony A7R V Camera',
+              productImage: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=200',
+              otherParty: 'Freelance Studio',
+              isSeller: true,
+              currentOffer: 3100,
+              status: 'pending',
+            }
+          ];
+        }
+
         setNegotiations(formatted);
       } catch (err) {
         console.error("Failed to fetch negotiations:", err);
@@ -36,8 +68,9 @@ const Negotiations = () => {
     if (user) fetchMyNegotiations();
   }, [user]);
 
-  const filteredData = negotiations.filter(item => 
-    item.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = negotiations.filter(item =>
+    item.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.otherParty.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) return <div className="h-[60vh] flex items-center justify-center"><Loader2 className="w-10 h-10 animate-spin text-indigo-600" /></div>;
@@ -45,7 +78,7 @@ const Negotiations = () => {
   return (
     <div className="space-y-6 pb-10 max-w-full">
       <SEO title="My Negotiations" />
-      
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Active Negotiations</h1>
@@ -53,10 +86,10 @@ const Negotiations = () => {
         </div>
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input 
-            type="text" 
-            placeholder="Search your deals..." 
-            value={searchTerm} 
+          <input
+            type="text"
+            placeholder="Search your deals..."
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all shadow-sm dark:text-white"
           />
@@ -69,7 +102,7 @@ const Negotiations = () => {
             <thead>
               <tr className="bg-gray-50/50 dark:bg-gray-800/50 border-bottom border-gray-100 dark:border-gray-800">
                 <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Product</th>
-                <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Seller</th>
+                <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Negotiating With</th>
                 <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Last Offer</th>
                 <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Status</th>
                 <th className="px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest text-center">Action</th>
@@ -78,7 +111,7 @@ const Negotiations = () => {
             <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
               <AnimatePresence>
                 {filteredData.map((item, index) => (
-                  <motion.tr 
+                  <motion.tr
                     key={item.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -98,24 +131,23 @@ const Negotiations = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{item.seller}</span>
-                        <span className="text-[11px] text-gray-400">Verified Seller</span>
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{item.otherParty}</span>
+                        <span className="text-[11px] text-gray-400">{item.isSeller ? 'Potential Buyer' : 'Verified Seller'}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-base font-black text-gray-900 dark:text-white">${item.currentOffer?.toLocaleString()}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${
-                        item.status === 'accepted' 
-                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800' 
-                        : 'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-800'
-                      }`}>
+                      <span className={`inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${item.status === 'accepted'
+                          ? 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800'
+                          : 'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-800'
+                        }`}>
                         {item.status}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <button 
+                      <button
                         onClick={() => navigate(`/negotiation-room/${item.id}`)}
                         className="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition-all shadow-sm group/btn"
                       >

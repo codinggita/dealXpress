@@ -20,13 +20,15 @@ const ChatBox = ({
 }) => {
   
   const lastOffer = currentNegotiation?.lastOffer;
-  const canRespond = lastOffer && lastOffer.by !== currentNegotiation.user && currentNegotiation.status !== 'accepted' && currentNegotiation.status !== 'rejected';
 
   // Determine if current user can respond to the last offer
-  // Note: Backend handles this, but UI should show buttons
+  const sellerId = (currentNegotiation?.seller?._id || currentNegotiation?.seller)?.toString();
+  const buyerId = (currentNegotiation?.buyer?._id || currentNegotiation?.buyer)?.toString();
+  const lastOfferById = (lastOffer?.by?._id || lastOffer?.by)?.toString();
+
   const showResponseButtons = lastOffer && 
-    ((isSeller && lastOffer.by !== currentNegotiation.seller) || 
-     (!isSeller && lastOffer.by !== currentNegotiation.buyer)) &&
+    ((isSeller && lastOfferById !== sellerId) || 
+     (!isSeller && lastOfferById !== buyerId)) &&
     currentNegotiation.status === 'active';
   return (
     <div className="w-full flex-1 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/75 dark:border-gray-800 shadow-sm flex flex-col h-full overflow-hidden transition-colors duration-300">

@@ -32,8 +32,34 @@
 
 ---
 
+## ❓ The Problem Statement
+In the current digital landscape, e-commerce platforms often impose a rigid, fixed-price model that fails to accommodate the dynamic nature of B2B or high-value C2C transactions. This lack of flexibility leads to:
+*   **Fragmented Communication:** Buyers and sellers are forced to use third-party apps (WhatsApp, Email) to negotiate, leading to security risks and lost data.
+*   **Logistics Disconnect:** After a price is agreed upon externally, there is often no direct link to a reliable delivery system, causing delays and friction.
+*   **Lack of Transparency:** Real-time updates on offer statuses and shipping progress are rarely unified in a single dashboard.
+
+## 💡 The Solution
+**DealXpress** solves these challenges by providing an all-in-one ecosystem where negotiation and logistics coexist.
+*   **Integrated Negotiation Engine:** A dedicated, real-time environment for making, countering, and accepting offers without leaving the platform.
+*   **Seamless Logistics Integration:** Instant shipping quotes and one-click booking as soon as a deal is finalized.
+*   **Unified Command Center:** A comprehensive analytics dashboard that tracks every stage of the transaction—from the first offer to the final delivery.
+
+---
+
+## 📸 Platform Preview
+
 <p align="center">
   <img src="./Frontend/public/hero.png" alt="DealXpress Hero" width="100%">
+</p>
+
+<p align="center">
+  <img src="./Frontend/public/negotiation.png" alt="Negotiation Room" width="49%">
+  <img src="./Frontend/public/analytics.png" alt="Analytics Dashboard" width="49%">
+</p>
+
+<p align="center">
+  <img src="./Frontend/public/tracking.png" alt="Delivery Tracking" width="49%">
+  <img src="./Frontend/public/contact.png" alt="Support & Contact" width="49%">
 </p>
 
 ## ✨ Full Feature List
@@ -71,12 +97,16 @@
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | React 19, Vite, Tailwind CSS 4, Redux Toolkit, Framer Motion, Spline (3D), Recharts, Lucide Icons |
-| **Backend** | Node.js, Express 5, Socket.io, JWT, Google OAuth, Express-Async-Handler, Morgan |
-| **Database** | MongoDB Atlas, Mongoose |
-| **Logistics** | Custom Pricing Algorithm & Tracking System |
+| **Frontend Core** | React 19, Redux Toolkit, React Router 7, Axios |
+| **UI & Styling** | Tailwind CSS 4, Material UI (MUI), Framer Motion, Spline (3D), Lucide Icons |
+| **Backend Core** | Node.js, Express 5, Socket.io (Real-time), Express-Async-Handler |
+| **Database & Auth** | MongoDB Atlas, Mongoose, JWT, Google OAuth 2.0, BcryptJS |
+| **Experience** | Lenis (Smooth Scroll), React Flow, Recharts (Analytics), Lottie React |
+| **Security & Utilities** | Helmet, Express-Rate-Limit, Morgan, Nodemailer, Validator |
+| **Build & Tooling** | Vite, PostCSS, ESLint, Nodemon |
 
 ---
+
 
 ## 📁 Project Structure
 
@@ -204,15 +234,6 @@ DealXpress implements a robust routing system with multi-level access control to
 
 ---
 
-## ✅ Final Project Update (May 1, 2026)
-The project is now officially **COMPLETE** and industry-ready. The final phase focused on:
-*   **Comprehensive Audit:** Verified all features against industry-standard checklists.
-*   **Auth Stabilization:** Fixed profile photo persistence and synchronized local state with backend tokens.
-*   **UI/UX Polishing:** Finalized Dark Mode consistency across all modules (`Marketplace`, `Analytics`, `Auth`).
-*   **Production Readiness:** Optimized API endpoints with environment variables and resolved CORS/Socket.io routing for Vercel/Render deployments.
-*   **Performance:** Refined loading states and error handling for a seamless user experience.
-
----
 
 ## 📜 License
 This project is licensed under the MIT License.

@@ -30,11 +30,13 @@
 ---
 
 ## 🔗 Live Demo & Documentation
-- **Frontend (Live Site):** [https://deal-xpress.vercel.app](https://deal-xpress.vercel.app)
-- **Backend (API Base):** [https://dealxpress.onrender.com](https://dealxpress.onrender.com)
-- **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
-- **Figma Design (UI/UX):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
-- **Project Demo (YouTube):** [https://youtube.com/watch?v=your-video-id](https://youtube.com/watch?v=your-video-id)
+Access the live platform, API documentation, and design prototypes through the links below:
+
+*   🌐 **Frontend (Vercel)** — [deal-xpress.vercel.app](https://deal-xpress.vercel.app)
+*   ⚙️ **Backend (Render)** — [dealxpress.onrender.com](https://dealxpress.onrender.com)
+*   📖 **API Docs (Postman)** — [Postman Documentation](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
+*   🎨 **UI/UX Design (Figma)** — [Interactive Figma Prototype](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
+*   🎬 **Demo Video (YouTube)** — [Watch Platform Walkthrough](https://youtube.com/watch?v=your-video-id)
 
 ---
 

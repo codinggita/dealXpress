@@ -131,7 +131,16 @@ const Account = () => {
           
           <div className="pt-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <h2 className="text-2xl font-black text-gray-900 dark:text-white">{user?.name || 'John Doe'}</h2>
+              <div className="flex items-center gap-3 mb-1">
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white">{user?.name || 'John Doe'}</h2>
+                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                  user?.role === 'admin' ? 'bg-red-50 text-red-600 border-red-100 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800' :
+                  user?.role === 'supplier' ? 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800' :
+                  'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-800'
+                }`}>
+                  {user?.role === 'supplier' ? 'Seller' : user?.role === 'admin' ? 'Admin' : 'Buyer'}
+                </span>
+              </div>
               <p className="text-gray-500 dark:text-gray-400 font-medium">{user?.email || 'john@example.com'}</p>
             </div>
             <button 

@@ -25,6 +25,7 @@ const Analytics       = lazy(() => import('./pages/Analytics'));
 const Contact         = lazy(() => import('./pages/Contact'));
 const Account         = lazy(() => import('./pages/Account'));
 const Checkout        = lazy(() => import('./pages/Checkout'));
+const SellerProducts  = lazy(() => import('./pages/SellerProducts'));
 const DashboardLayout = lazy(() => import('./components/layouts/DashboardLayout'));
 
 // ─────────────────────────────────────────────
@@ -137,6 +138,14 @@ function App() {
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/account" element={<Account />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route 
+                path="/seller-products" 
+                element={
+                  <ProtectedRoute allowedRoles={['supplier', 'admin']}>
+                    <SellerProducts />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/dashboard" element={<Navigate to="/marketplace" replace />} />
             </Route>
 

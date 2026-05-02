@@ -10,7 +10,7 @@ import useAuth from '../hooks/useAuth';
  * If loading → shows a centered spinner.
  * If authenticated → renders children normally.
  */
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, isLoading, isAuthenticated } = useAuth();
   const location = useLocation();
 
@@ -23,9 +23,14 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // Not authenticated → redirect to login, preserve where they were going
+  // Not authenticated → redirect to login
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Role check → if allowedRoles is provided, check if user has one of them
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/marketplace" replace />;
   }
 
   return children;

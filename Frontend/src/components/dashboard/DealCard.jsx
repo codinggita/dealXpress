@@ -14,12 +14,21 @@ const DealCard = ({ deal }) => {
 
   const { user } = useSelector((state) => state.auth);
 
+  const isSellerRole = user?.role === 'supplier';
+  const isOwnProduct = user?._id === (deal.sellerId?._id || deal.sellerId);
+
   const handleMakeOffer = (e) => {
     e.stopPropagation();
     if (!user) {
       navigate('/login', { state: { from: '/marketplace', deal } });
       return;
     }
+    
+    if (isSellerRole && !isOwnProduct) {
+      toast.error("Seller accounts cannot initiate negotiations. Please use a Buyer account.");
+      return;
+    }
+
     navigate('/negotiation-room', { state: { deal } });
   };
   
@@ -42,11 +51,11 @@ const DealCard = ({ deal }) => {
 
   return (
     <motion.div 
-      onClick={handleMakeOffer}
+      onClick={() => !isOwnProduct && handleMakeOffer()}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group flex flex-col h-full bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/75 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300"
+      className={`group flex flex-col h-full bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/75 dark:border-gray-800 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 ${isOwnProduct ? 'cursor-default' : 'cursor-pointer'} transition-all duration-300`}
     >
       {/* Image Container */}
       <div className="relative h-44 bg-[#F8F9FA] dark:bg-gray-800/50 p-4 flex items-center justify-center border-b border-gray-100 dark:border-gray-800 shrink-0">
@@ -58,6 +67,11 @@ const DealCard = ({ deal }) => {
         {badge && (
           <div className="absolute top-3 left-3 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide text-gray-800 dark:text-gray-200 shadow-sm border border-gray-100/50 dark:border-gray-700">
             {badge}
+          </div>
+        )}
+        {isOwnProduct && (
+          <div className="absolute top-3 right-3 bg-emerald-500 text-white px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest shadow-lg">
+            Mine
           </div>
         )}
       </div>
@@ -84,17 +98,26 @@ const DealCard = ({ deal }) => {
           <div className="flex gap-2">
             <button 
               onClick={handleMakeOffer}
-              className="flex-1 py-2.5 text-[13px] font-black text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-xl shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98] transition-all duration-200 uppercase tracking-wider"
+              disabled={isOwnProduct || (isSellerRole && !isOwnProduct)}
+              className={`flex-1 py-2.5 text-[13px] font-black text-white rounded-xl shadow-md transition-all duration-200 uppercase tracking-wider ${
+                isOwnProduct 
+                ? 'bg-gray-400 cursor-not-allowed opacity-50' 
+                : (isSellerRole && !isOwnProduct)
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed border border-gray-300'
+                  : 'bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/40 active:scale-[0.98]'
+              }`}
             >
-              Negotiate
+              {isOwnProduct ? 'Your Product' : isSellerRole ? 'Sellers Cannot Buy' : 'Negotiate'}
             </button>
-            <button 
-              onClick={handleAddToCart}
-              className="p-2.5 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-750 transition-all active:scale-95 border border-gray-200/50 dark:border-gray-700"
-              title="Add to Cart"
-            >
-              <ShoppingCart className="w-5 h-5" />
-            </button>
+            {!isOwnProduct && !isSellerRole && (
+              <button 
+                onClick={handleAddToCart}
+                className="p-2.5 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-750 transition-all active:scale-95 border border-gray-200/50 dark:border-gray-700"
+                title="Add to Cart"
+              >
+                <ShoppingCart className="w-5 h-5" />
+              </button>
+            )}
           </div>
         </div>
       </div>

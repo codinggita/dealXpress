@@ -111,6 +111,12 @@ const NegotiationRoom = () => {
   // Join room and fetch history
   useEffect(() => {
     const negotiationId = id || currentNegotiation?._id;
+    
+    // Handle Dummy Data for Demo
+    if (negotiationId?.startsWith('neg_dummy')) {
+      return; // Skip backend calls for dummy IDs
+    }
+
     if (negotiationId) {
       joinRoom(negotiationId);
       dispatch(getNegotiationMessages(negotiationId));

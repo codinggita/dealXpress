@@ -28,7 +28,7 @@
 - **Frontend (Live Site):** [https://deal-xpress.vercel.app](https://deal-xpress.vercel.app)
 - **Backend (API Base):** [https://dealxpress.onrender.com](https://dealxpress.onrender.com)
 - **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
-- **Figma Link(Figma):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
+- **Figma Link(UI Design):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
 
 ---
 

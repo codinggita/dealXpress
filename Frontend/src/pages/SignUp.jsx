@@ -153,10 +153,62 @@ const SignUp = () => {
                 >
                   <option value="user" className="bg-white dark:bg-gray-900">Individual User</option>
                   <option value="buyer" className="bg-white dark:bg-gray-900">Buyer / Importer</option>
-                  <option value="supplier" className="bg-white dark:bg-gray-900">Supplier / Exporter</option>
+                  <option value="supplier" className="bg-white dark:bg-gray-900">Supplier / Exporter (Seller)</option>
                   <option value="admin" className="bg-white dark:bg-gray-900">Platform Administrator</option>
                 </select>
               </div>
+
+              {/* Shop Details for Sellers */}
+              {role === 'supplier' && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  className="space-y-4 pt-2"
+                >
+                  <div className="relative group">
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 dark:group-focus-within:text-indigo-400 transition-colors w-5 h-5" />
+                    <input
+                      type="text"
+                      name="shopName"
+                      value={formData.shopName || ''}
+                      onChange={onChange}
+                      placeholder="Shop / Business Name"
+                      className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl outline-none focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 focus:border-indigo-600 dark:focus:border-indigo-500 transition-all font-medium text-gray-900 dark:text-white shadow-sm"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 dark:group-focus-within:text-indigo-400 transition-colors w-5 h-5" />
+                      <input
+                        type="text"
+                        name="gstNumber"
+                        value={formData.gstNumber || ''}
+                        onChange={onChange}
+                        placeholder="GST Number"
+                        className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl outline-none focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 focus:border-indigo-600 dark:focus:border-indigo-500 transition-all font-medium text-gray-900 dark:text-white shadow-sm text-sm"
+                      />
+                    </div>
+                    <div className="relative group">
+                      <TrendingUp className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 dark:group-focus-within:text-indigo-400 transition-colors w-5 h-5" />
+                      <select
+                        name="businessCategory"
+                        value={formData.businessCategory || ''}
+                        onChange={onChange}
+                        className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl outline-none focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 focus:border-indigo-600 dark:focus:border-indigo-500 transition-all font-medium text-gray-900 dark:text-white shadow-sm appearance-none cursor-pointer text-sm"
+                        required
+                      >
+                        <option value="">Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             <Button 

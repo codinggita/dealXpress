@@ -5,13 +5,31 @@ import nodemailer from 'nodemailer';
 
 // @desc    Register a new user
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, shopName, gstNumber, businessCategory } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) { res.status(400); throw new Error('User already exists'); }
-  const user = await User.create({ name, email, password, role: role || 'user' });
+  const user = await User.create({ 
+    name, 
+    email, 
+    password, 
+    role: role || 'user',
+    shopName,
+    gstNumber,
+    businessCategory
+  });
   if (user) {
     const token = generateTokens(res, user._id);
-    res.status(201).json({ _id: user._id, name: user.name, email: user.email, role: user.role, avatar: user.avatar, token });
+    res.status(201).json({ 
+      _id: user._id, 
+      name: user.name, 
+      email: user.email, 
+      role: user.role, 
+      shopName: user.shopName,
+      gstNumber: user.gstNumber,
+      businessCategory: user.businessCategory,
+      avatar: user.avatar, 
+      token 
+    });
   } else { res.status(400); throw new Error('Invalid user data'); }
 });
 

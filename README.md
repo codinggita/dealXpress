@@ -1,7 +1,6 @@
 # 🚀 DealXpress - The Ultimate Marketplace & Logistics Ecosystem
 
 
-
 <p align="center">
   <a href="https://deal-xpress.vercel.app">
     <img src="https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel" alt="Vercel">
@@ -29,6 +28,7 @@
 - **Frontend (Live Site):** [https://deal-xpress.vercel.app](https://deal-xpress.vercel.app)
 - **Backend (API Base):** [https://dealxpress.onrender.com](https://dealxpress.onrender.com)
 - **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
+- **Figma Link(Figma):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
 
 ---
 

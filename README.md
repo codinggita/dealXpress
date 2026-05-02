@@ -23,10 +23,6 @@
 
 
 
-
-
-
-
 ---
 
 **DealXpress** is a premium, full-stack e-commerce ecosystem designed to revolutionize how buyers and sellers interact. By integrating **Real-Time Price Negotiation** and **Instant Logistics Booking** into a single, seamless platform, DealXpress eliminates the friction between deal-making and delivery.
@@ -37,12 +33,8 @@
 - **Frontend (Live Site):** [https://deal-xpress.vercel.app](https://deal-xpress.vercel.app)
 - **Backend (API Base):** [https://dealxpress.onrender.com](https://dealxpress.onrender.com)
 - **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
-<<<<<<< HEAD
 - **Figma Design (UI/UX):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
 - **Project Demo (YouTube):** [https://youtube.com/watch?v=your-video-id](https://youtube.com/watch?v=your-video-id)
-=======
-- **Figma Link(UI Design):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
->>>>>>> e19b6989c1783d857ec0cea6fe256a1e17546f49
 
 ---
 

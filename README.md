@@ -3,32 +3,38 @@
 
 <p align="center">
   <a href="https://deal-xpress.vercel.app">
-    <img src="https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel" alt="Vercel">
+    <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
   </a>
   <a href="https://dealxpress.onrender.com">
-    <img src="https://img.shields.io/badge/Deployed%20on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
+    <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
   </a>
   <a href="https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1&t=fa1ld6Br2HxuwlV2-0">
-    <img src="https://img.shields.io/badge/Design-Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma">
+    <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma">
   </a>
   <a href="https://documenter.getpostman.com/view/50840642/2sBXqKnf6N">
-    <img src="https://img.shields.io/badge/API-Documentation-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman Documentation">
+    <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman">
+  </a>
+  <a href="https://your-video-link.com">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
   </a>
 </p>
 
-<p align="center">
-  🔗 <b>Figma Design:</b> <a href="https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1&t=fa1ld6Br2HxuwlV2-0">View Interactive Prototype</a>
-</p>
+
+
+
 
 ---
 
 **DealXpress** is a premium, full-stack e-commerce ecosystem designed to revolutionize how buyers and sellers interact. By integrating **Real-Time Price Negotiation** and **Instant Logistics Booking** into a single, seamless platform, DealXpress eliminates the friction between deal-making and delivery.
 
+---
+
 ## 🔗 Live Demo & Documentation
 - **Frontend (Live Site):** [https://deal-xpress.vercel.app](https://deal-xpress.vercel.app)
 - **Backend (API Base):** [https://dealxpress.onrender.com](https://dealxpress.onrender.com)
 - **API Documentation (Postman):** [https://documenter.getpostman.com/view/50840642/2sBXqKnf6N](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
-- **Figma Link(UI Design):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
+- **Figma Design (UI/UX):** [https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
+- **Project Demo (YouTube):** [https://youtube.com/watch?v=your-video-id](https://youtube.com/watch?v=your-video-id)
 
 ---
 
@@ -37,6 +43,8 @@ In the current digital landscape, e-commerce platforms often impose a rigid, fix
 *   **Fragmented Communication:** Buyers and sellers are forced to use third-party apps (WhatsApp, Email) to negotiate, leading to security risks and lost data.
 *   **Logistics Disconnect:** After a price is agreed upon externally, there is often no direct link to a reliable delivery system, causing delays and friction.
 *   **Lack of Transparency:** Real-time updates on offer statuses and shipping progress are rarely unified in a single dashboard.
+
+---
 
 ## 💡 The Solution
 **DealXpress** solves these challenges by providing an all-in-one ecosystem where negotiation and logistics coexist.
@@ -61,6 +69,8 @@ In the current digital landscape, e-commerce platforms often impose a rigid, fix
   <img src="./Frontend/public/tracking.png" alt="Delivery Tracking" width="49%">
   <img src="./Frontend/public/contact.png" alt="Support & Contact" width="49%">
 </p>
+
+---
 
 ## ✨ Full Feature List
 

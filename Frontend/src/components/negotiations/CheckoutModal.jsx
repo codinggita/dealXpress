@@ -36,20 +36,26 @@ const CheckoutModal = ({ isOpen, onClose, deal, offerAmount, negotiationId, nego
         };
 
         const orderData = {
-          // Use IDs from negotiation object as they are confirmed MongoDB ObjectIds
-          productId: negotiation?.product?._id || negotiation?.product || deal.id || deal._id,
-          productName: deal.title || deal.productData?.name,
-          productImage: deal.image || deal.productData?.image,
-          amount: offerAmount || deal.price || deal.originalPrice,
-          negotiationId: negotiationId,
-          sellerId: negotiation?.seller?._id || negotiation?.seller || deal.sellerId || deal.seller,
+          orderItems: [
+            {
+              name: deal.title || deal.productData?.name,
+              qty: 1,
+              image: deal.image || deal.productData?.image,
+              price: offerAmount || deal.price || deal.originalPrice,
+              product: negotiation?.product?._id || negotiation?.product || deal.id || deal._id,
+              seller: negotiation?.seller?._id || negotiation?.seller || deal.sellerId || deal.seller,
+            }
+          ],
           shippingAddress: {
             street: values.address,
             city: values.city,
             state: values.state,
             zipCode: values.zipCode,
-            country: 'India' // Default for now
-          }
+            country: 'India'
+          },
+          itemsPrice: offerAmount || deal.price || deal.originalPrice,
+          totalPrice: offerAmount || deal.price || deal.originalPrice, // Delivery added on backend
+          negotiationId: negotiationId,
         };
 
         const { data } = await axios.post((import.meta.env.VITE_BACKEND_URL || '') + '/api/orders', orderData, config);

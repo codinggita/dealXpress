@@ -14,7 +14,7 @@
   <a href="https://documenter.getpostman.com/view/50840642/2sBXqKnf6N">
     <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman">
   </a>
-  <a href="https://your-video-link.com">
+  <a href="https://youtu.be/IG5rx7y8UrM">
     <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
   </a>
 </p>
@@ -36,7 +36,7 @@ Access the live platform, API documentation, and design prototypes through the l
 *   ⚙️ **Backend (Render)** — [dealxpress.onrender.com](https://dealxpress.onrender.com)
 *   📖 **API Docs (Postman)** — [Postman Documentation](https://documenter.getpostman.com/view/50840642/2sBXqKnf6N)
 *   🎨 **UI/UX Design (Figma)** — [Interactive Figma Prototype](https://www.figma.com/design/pcZTA0YGwea3f4Zh6a7W9A/DealXpress?node-id=0-1)
-*   🎬 **Demo Video (YouTube)** — [Watch Platform Walkthrough](https://youtube.com/watch?v=your-video-id)
+*   🎬 **Demo Video (YouTube)** — [Watch Platform Walkthrough](https://youtu.be/IG5rx7y8UrM)
 
 ---
 
